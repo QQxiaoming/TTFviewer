@@ -1,0 +1,12 @@
+Package: ttfviewer
+Version: #VERSION#
+Architecture: amd64
+Section: utils
+Depends: 
+Recommends: 
+Source: TTFviewer
+Installed-Size: #SIZE#
+Priority: extra
+Maintainer: QQxiaoming <2014500726@smail.xtu.edu.cn>
+Description: TTFviewer tools
+Homepage: https://github.com/QQxiaoming/TTFviewer

@@ -69,7 +69,7 @@ win32:{
     INCLUDEPATH += $${FREETPE2_DIR}\include\freetype2 \
                     $${FREETPE2_DIR}\include
 
-    LIBS += $${FREETPE2_DIR}\lib\libfreetype.a
+    LIBS += $${FREETPE2_DIR}\lib\libfreetype.dll.a
 
     VERSION = $${YVYVIEWER_VERSION}.000
     QMAKE_TARGET_PRODUCT = "TTFviewer"
@@ -83,7 +83,9 @@ unix:!macx:{
     QMAKE_RPATHDIR=$ORIGIN
     QMAKE_LFLAGS += -no-pie
 
+    INCLUDEPATH += -I $${FREETPE2_DIR}/include
     INCLUDEPATH += -I $${FREETPE2_DIR}/include/freetype2
+    DEPENDPATH +=$${FREETPE2_DIR}/include
     DEPENDPATH +=$${FREETPE2_DIR}/include/freetype2
     LIBS += -L $${FREETPE2_DIR}/lib/ -lfreetype
     
@@ -93,6 +95,12 @@ unix:!macx:{
 macx:{
     QMAKE_RPATHDIR=$ORIGIN
     
+    INCLUDEPATH += -I $${FREETPE2_DIR}/include
+    INCLUDEPATH += -I $${FREETPE2_DIR}/include/freetype2
+    DEPENDPATH +=$${FREETPE2_DIR}/include
+    DEPENDPATH +=$${FREETPE2_DIR}/include/freetype2
+    LIBS += -L $${FREETPE2_DIR}/lib/ -lfreetype
+
     git_tag.commands = $$quote("cd $$PWD && git describe --always --long --dirty --abbrev=10 --tags | awk \'{print \"\\\"\"\$$0\"\\\"\"}\' > git_tag.inc")
 }
 
