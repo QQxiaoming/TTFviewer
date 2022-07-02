@@ -300,7 +300,6 @@ bool TTFviewer::updateConfig(void)
         QMessageBox::critical(this, "Error", "frameSize invalid!!", QMessageBox::Ok);
         return false;
     }
-
 }
 
 bool TTFviewer::imgView(QStringList openfile_list)

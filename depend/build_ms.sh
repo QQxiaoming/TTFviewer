@@ -10,3 +10,4 @@ cd $SHELL_FOLDER/freetype-2.3.5
     --without-zlib
 make -j4
 make install
+rm -rf $SHELL_FOLDER/freetype-2.3.5

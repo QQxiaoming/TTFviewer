@@ -104,7 +104,6 @@ public:
         debug << "\nFree library. error code: " << error;
         debug << "\n-->\n";
     }
-
 };
 
 

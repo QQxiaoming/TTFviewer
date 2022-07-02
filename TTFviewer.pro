@@ -69,7 +69,7 @@ win32:{
     INCLUDEPATH += $${FREETPE2_DIR}\include\freetype2 \
                     $${FREETPE2_DIR}\include
 
-    LIBS += $${FREETPE2_DIR}\lib\libfreetype.dll.a
+    LIBS += $${FREETPE2_DIR}\lib\libfreetype.a
 
     VERSION = $${YVYVIEWER_VERSION}.000
     QMAKE_TARGET_PRODUCT = "TTFviewer"
