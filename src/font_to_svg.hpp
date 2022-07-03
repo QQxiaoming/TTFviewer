@@ -139,7 +139,7 @@ std::string do_outline(std::vector<FT_Vector> points, std::vector<char> tags, st
 
     int contour_starti = 0;
     int contour_endi = 0;
-    for ( int i = 0 ; i < contours.size() ; i++ ) {
+    for ( size_t i = 0 ; i < contours.size() ; i++ ) {
         contour_endi = contours.at(i);
         debug << "new contour starting. startpt index, endpt index:";
         debug << contour_starti << "," << contour_endi << "\n";

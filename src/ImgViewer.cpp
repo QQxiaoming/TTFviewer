@@ -32,7 +32,7 @@ TTFDecodeThread::TTFDecodeThread(QWidget *parent,QString ttffilename,QString TTF
 
 void TTFDecodeThread::run()
 {
-    QList<QPixmap> frame_RGB_list;
+    QList<QPixmap *> frame_RGB_list;
     if(this->decoder == nullptr)
     {
         // 未能成功获取则返回无法解码
@@ -57,7 +57,7 @@ ImgViewer::ImgViewer(QWidget *parent,QWidget *parentWindow) :
     ui(new Ui::ImgViewerWindow)
 {
     ui->setupUi(this);
-    qRegisterMetaType<QList<QPixmap>>("QList<QPixmap>");
+    qRegisterMetaType<QList<QPixmap *>>("QList<QPixmap *>");
     this->parentWindow = parentWindow;
     setWindowTitle("loading file, please wait ....");
     ui->left_PushButton->setFlat(true);
@@ -88,7 +88,7 @@ bool ImgViewer::setFileList(QStringList filenamelist,QString TTFFormat, int W, i
         // 遍历文件列表
         foreach( QString filename, filenamelist)
         {
-            QList<QPixmap> frame_RGB_list;
+            QList<QPixmap *> frame_RGB_list;
 
             // 使用获取的解码函数进行解码得到RGB的原始帧列表
             frame_RGB_list = decoder(filename, W, H, codepoint);
@@ -107,13 +107,13 @@ bool ImgViewer::setFileList(QStringList filenamelist,QString TTFFormat, int W, i
         this->currentImg_RGB_list = this->img_list.at(0);
         this->currentImg = this->currentImg_RGB_list.at(0);
         this->setWindowTitle(this->filelist.at(0)+"-0");
-        this->scaled_img = this->currentImg.scaled(this->size());
+        this->scaled_img = this->currentImg->scaled(this->size());
         this->point = QPoint(0, 0);
         return true;
     }
 }
 
-void ImgViewer::reciveimgdata(QList<QPixmap> img_RGB_list,QString filename)
+void ImgViewer::reciveimgdata(QList<QPixmap *> img_RGB_list,QString filename)
 {
     if (!img_RGB_list.empty())
     {
@@ -128,7 +128,7 @@ void ImgViewer::reciveimgdata(QList<QPixmap> img_RGB_list,QString filename)
             this->currentImg_RGB_list = this->img_list.at(0);
             this->currentImg = this->currentImg_RGB_list.at(0);
             this->setWindowTitle(this->filelist.at(0)+"-0");
-            this->scaled_img = this->currentImg.scaled(this->size());
+            this->scaled_img = this->currentImg->scaled(this->size());
             this->point = QPoint(0, 0);
             this->repaint();
         }
@@ -162,7 +162,7 @@ bool ImgViewer::setFileList_multithreading(QStringList filenamelist,QString TTFF
     foreach( QString filename, filenamelist)
     {
         TTFDecodeThread *decodeThread = new TTFDecodeThread(this, filename, TTFFormat, W, H, codepoint);
-        QObject::connect(decodeThread, SIGNAL(finsh_signal(QList<QPixmap>, QString)), this, SLOT(reciveimgdata(QList<QPixmap>, QString)));
+        QObject::connect(decodeThread, SIGNAL(finsh_signal(QList<QPixmap *>, QString)), this, SLOT(reciveimgdata(QList<QPixmap *>, QString)));
         this->decode_thread.insert(this->decode_thread.end(),decodeThread);
     }
     this->decode_thread[0]->start();
@@ -175,13 +175,13 @@ void ImgViewer::closeEvent(QCloseEvent *event)
     event->accept();
     if(!this->img_list.empty())
     {
-        foreach(QList<QPixmap> list,this->img_list)
+        foreach(QList<QPixmap *> list,this->img_list)
         {
             if(!list.empty())
             {
-                foreach(QPixmap img,list)
+                foreach(QPixmap *img,list)
                 {
-                    //delete img;
+                    delete img;
                 }
             }
         }
@@ -243,12 +243,12 @@ void ImgViewer::mouseReleaseEvent(QMouseEvent *event)
         else if(event->button() == Qt::RightButton)
         {
             this->point = QPoint(0, 0);
-            this->scaled_img = this->currentImg.scaled(this->size());
+            this->scaled_img = this->currentImg->scaled(this->size());
             this->repaint();
         }
         else if(event->button() == Qt::MiddleButton)
         {
-            this->scaled_img = this->currentImg.scaled(this->currentImg.size().width(),this->currentImg.size().height());
+            this->scaled_img = this->currentImg->scaled(this->currentImg->size().width(),this->currentImg->size().height());
             this->point = QPoint(0, 0);
             this->repaint();
         }
@@ -262,19 +262,19 @@ void ImgViewer::mouseDoubleClickEvent(QMouseEvent *event)
         if( event->button() == Qt::LeftButton)
         {
             int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-            QList<QPixmap> img_RGB_list = this->img_list[list_index];
+            QList<QPixmap *> img_RGB_list = this->img_list[list_index];
             int img_index = img_RGB_list.indexOf(this->currentImg);
             QString savefile_name = QFileDialog::getSaveFileName(this, "保存文件", this->filelist[list_index].replace(".ttf","-") + QString::number(img_index) + ".png", "Image files(*.png)");
             if(savefile_name != nullptr)
             {
-                this->currentImg.save(savefile_name);
+                this->currentImg->save(savefile_name);
             }
         }   
         else if(event->button() == Qt::RightButton)
         {
             this->flipRGB = this->flipRGB ? false : true;
             this->point = QPoint(0, 0);
-            this->scaled_img = this->currentImg.scaled(this->size());
+            this->scaled_img = this->currentImg->scaled(this->size());
             this->repaint();
         }
     }
@@ -292,7 +292,7 @@ void ImgViewer::wheelEvent(QWheelEvent *event)
                 float setpsize_x = ((float)this->scaled_img.width())/16.0f;
                 float setpsize_y = ((float)this->scaled_img.height())/16.0f; //缩放可能导致比例不精确
 
-                this->scaled_img = this->currentImg.scaled(this->scaled_img.width() + setpsize_x,this->scaled_img.height() + setpsize_y);
+                this->scaled_img = this->currentImg->scaled(this->scaled_img.width() + setpsize_x,this->scaled_img.height() + setpsize_y);
                 float new_w = event->x() - (this->scaled_img.width() * (event->x() - this->point.x())) / (this->scaled_img.width() - setpsize_x);
                 float new_h = event->y() - (this->scaled_img.height() * (event->y() - this->point.y())) / (this->scaled_img.height() - setpsize_y);
                 this->point = QPoint(new_w, new_h);
@@ -307,7 +307,7 @@ void ImgViewer::wheelEvent(QWheelEvent *event)
                 float setpsize_x = ((float)this->scaled_img.width())/16.0f;
                 float setpsize_y = ((float)this->scaled_img.height())/16.0f; //缩放可能导致比例不精确
 
-                this->scaled_img = this->currentImg.scaled(this->scaled_img.width() - setpsize_x,this->scaled_img.height() - setpsize_y);
+                this->scaled_img = this->currentImg->scaled(this->scaled_img.width() - setpsize_x,this->scaled_img.height() - setpsize_y);
                 float new_w = event->x() - (this->scaled_img.width() * (event->x() - this->point.x())) / (this->scaled_img.width() + setpsize_x);
                 float new_h = event->y() - (this->scaled_img.height() * (event->y() - this->point.y())) / (this->scaled_img.height() + setpsize_y);
                 this->point = QPoint(new_w, new_h);
@@ -321,7 +321,7 @@ void ImgViewer::resizeEvent(QResizeEvent *event)
 {
     if (!this->img_list.empty())
     {
-        this->scaled_img = this->currentImg.scaled(this->size());
+        this->scaled_img = this->currentImg->scaled(this->size());
         this->point = QPoint(0, 0);
         this->update();
     }
@@ -334,7 +334,7 @@ void ImgViewer::previousImg()
     {
         //得到当前显示的文件序号
         int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-        QList<QPixmap> img_RGB_list = this->img_list[list_index];
+        QList<QPixmap *> img_RGB_list = this->img_list[list_index];
         //得到当前显示的图像是文件的帧序号
         int img_index = img_RGB_list.indexOf(this->currentImg);
 
@@ -366,7 +366,7 @@ void ImgViewer::previousImg()
         this->currentImg_RGB_list = this->img_list[list_index];
         this->currentImg = this->currentImg_RGB_list[img_index];
         this->point = QPoint(0, 0);
-        this->scaled_img = this->currentImg.scaled(this->size());
+        this->scaled_img = this->currentImg->scaled(this->size());
         this->repaint();
     }
 }
@@ -377,7 +377,7 @@ void ImgViewer::nextImg()
     {
         //得到当前显示的文件序号
         int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-        QList<QPixmap> img_RGB_list = this->img_list[list_index];
+        QList<QPixmap *> img_RGB_list = this->img_list[list_index];
         //得到当前显示的图像是文件的帧序号
         int img_index = img_RGB_list.indexOf(this->currentImg);
 
@@ -409,7 +409,7 @@ void ImgViewer::nextImg()
         this->currentImg_RGB_list = this->img_list[list_index];
         this->currentImg = this->currentImg_RGB_list[img_index];
         this->point = QPoint(0, 0);
-        this->scaled_img = this->currentImg.scaled(this->size());
+        this->scaled_img = this->currentImg->scaled(this->size());
         this->repaint();
     }
 }

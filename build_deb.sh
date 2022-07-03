@@ -7,7 +7,7 @@ QT_DIR=/opt/Qt5.12.8/5.12.8/gcc_64
 # 定义版本号
 YVYVIEWER_MAJARVERSION="0"
 YVYVIEWER_SUBVERSION="0"
-YVYVIEWER_REVISION="1"
+YVYVIEWER_REVISION="2"
 ###############################################################################
 
 

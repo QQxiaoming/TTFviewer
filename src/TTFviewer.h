@@ -28,7 +28,6 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void changeFormat(const QString &text);
     void configComboBox();
     void configOther();
     void changeFrameSizeType(const QString &text);

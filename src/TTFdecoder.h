@@ -11,12 +11,12 @@
 #include <QList>
 #include <QMap>
 
-typedef QList<QPixmap> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
+typedef QList<QPixmap *> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
 
 class TTF2RGB
 {
 public:
-    static QList<QPixmap> ttf(QString ttffilename,int W, int H, int codepoint);
+    static QList<QPixmap *> ttf(QString ttffilename,int W, int H, int codepoint);
     static QMap<QString, ttfdecoder_t> ttfdecoder_map;
 };
 

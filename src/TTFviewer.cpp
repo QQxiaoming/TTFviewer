@@ -62,8 +62,6 @@ TTFviewer::TTFviewer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::TTFviewer)
 {
-    int currentIndex;
-
     ui->setupUi(this);
 
     this->setWindowTitle("TTFviewer " + VERSION);
@@ -119,11 +117,9 @@ TTFviewer::TTFviewer(QWidget *parent) :
     }
 
 
-    currentIndex = 0;
     QList<uint64_t> color_list;
 
 
-    QObject::connect(ui->TTFFormat_ComboBox, SIGNAL(currentTextChanged(const QString &)), this, SLOT(changeFormat(const QString &)));
     QObject::connect(ui->frameSizeType_Combo_RadioButton, SIGNAL(clicked()), this, SLOT(configComboBox()));
     QObject::connect(ui->frameSizeType_Other_RadioButton, SIGNAL(clicked()), this, SLOT(configOther()));
     QObject::connect(ui->frameSizeType_ComboBox, SIGNAL(currentTextChanged(const QString &)), this,SLOT(changeFrameSizeType(const QString &)));
@@ -149,10 +145,6 @@ TTFviewer::~TTFviewer()
         delete TTFviewerConfigFile;
     }
     delete ui;
-}
-
-void TTFviewer::changeFormat(const QString &text)
-{
 }
 
 void TTFviewer::configComboBox()

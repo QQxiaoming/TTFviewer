@@ -37,7 +37,7 @@ protected:
     void run();
 
 signals:
-    void finsh_signal(QList<QPixmap> frame_RGB_list,QString str);
+    void finsh_signal(QList<QPixmap *> frame_RGB_list,QString str);
 
 private:
     QWidget *window;
@@ -59,7 +59,7 @@ public:
     bool setFileList_multithreading(QStringList filenamelist, QString TTFFormat, int W, int H, int codepoint);
 
 private slots:
-    void reciveimgdata(QList<QPixmap> img_RGB_list, QString filename);
+    void reciveimgdata(QList<QPixmap*> img_RGB_list, QString filename);
     void previousImg();
     void nextImg();
 
@@ -79,14 +79,14 @@ private:
     QWidget *parentWindow;
     bool left_click;
 
-    QList<QList<QPixmap>> img_list;
+    QList<QList<QPixmap *>> img_list;
     QStringList filelist;
 
     QList<TTFDecodeThread*> decode_thread;
     QList<TTFDecodeThread*> decode_thread_finsh;
 
-    QList<QPixmap> currentImg_RGB_list;
-    QPixmap currentImg;
+    QList<QPixmap *> currentImg_RGB_list;
+    QPixmap *currentImg;
     QPixmap scaled_img;
     QPoint point;
     QPoint startPos;

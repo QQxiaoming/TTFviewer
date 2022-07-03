@@ -21,9 +21,9 @@ QMap<QString, ttfdecoder_t> TTF2RGB::ttfdecoder_map =
     {"ttf",            TTF2RGB::ttf},
 };
 
-QList<QPixmap> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint)
+QList<QPixmap *> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint)
 {
-    QList<QPixmap> rgbImglist;
+    QList<QPixmap *> rgbImglist;
     QString svgImg;
     QByteArray naBA = ttffilename.toLatin1();
 
@@ -43,9 +43,9 @@ QList<QPixmap> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint)
     QXmlStreamReader svgXmlStreamReader(svgImg);
     QSvgRenderer svgRender;
     svgRender.load(&svgXmlStreamReader);
-    QPixmap svgPixmap(W,H);
-    svgPixmap.fill(Qt::transparent);
-    QPainter svgPainter(&svgPixmap);
+    QPixmap *svgPixmap = new QPixmap(W,H);
+    svgPixmap->fill(Qt::transparent);
+    QPainter svgPainter(svgPixmap);
     svgRender.render(&svgPainter);
 
     rgbImglist.append(svgPixmap);
