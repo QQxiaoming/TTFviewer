@@ -17,9 +17,9 @@ TTFviewer is a small tool for developers to view and preview various ttf font/ic
 1. Select parameters on the main interface.
 2. Click Open File or Folder to parse the image data and display the image.
 3. Used in the image display interface
-    - scroll wheel to zoom in and out of the image,
-    - use the left button to drag the image,
-    - Double click the left button to save the image as png format,
+    - Scroll wheel to zoom in and out of the image,
+    - Use the left button to drag the image,
+    - Double click the left button to save the image as svg format,
     - Right click to reset image size and position,
     - Middle click to display the original size of the image.
 

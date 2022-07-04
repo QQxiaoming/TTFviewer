@@ -31,6 +31,7 @@ class TTF2RGB
 {
 public:
     static QList<SvgInfo> ttf(QString ttffilename,int W, int H, int codepoint);
+    static QList<SvgInfo> ttf_verbose(QString ttffilename,int W, int H, int codepoint);
     static QMap<QString, ttfdecoder_t> ttfdecoder_map;
 };
 

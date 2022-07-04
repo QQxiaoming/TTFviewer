@@ -281,18 +281,15 @@ void ImgViewer::mouseDoubleClickEvent(QMouseEvent *event)
             int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
             QList<SvgInfo> img_RGB_list = this->img_list[list_index];
             int img_index = img_RGB_list.indexOf(this->currentImg);
-            QString savefile_name = QFileDialog::getSaveFileName(this, "保存文件", this->filelist[list_index].replace(".ttf","-") + QString::number(img_index) + ".png", "Image files(*.png)");
+            QString savefile_name = QFileDialog::getSaveFileName(this, "保存文件", this->filelist[list_index].replace(".ttf","-") + "0x" + QString::number(this->currentImg.codepoint, 16) + "-" + QString::number(img_index) + ".svg", "Image files(*.svg)");
             if(savefile_name != nullptr)
             {
                 QString *svgsrc = this->currentImg.src;
-                QXmlStreamReader svgXmlStreamReader(*svgsrc);
-                QSvgRenderer svgRender;
-                svgRender.load(&svgXmlStreamReader);
-                QPixmap svgPixmap(this->currentImg.W,this->currentImg.H);
-                svgPixmap.fill(Qt::transparent);
-                QPainter svgPainter(&svgPixmap);
-                svgRender.render(&svgPainter);
-                svgPixmap.save(savefile_name);
+                QFile file(savefile_name);
+                file.open(QFile::ReadWrite | QFile::Text);
+                file.resize(0);
+                file.write(svgsrc->toUtf8());
+                file.close();
             }
         }   
         else if(event->button() == Qt::RightButton)

@@ -98,6 +98,11 @@
               <string>ttf</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>ttf_verbose</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
