@@ -36,6 +36,7 @@ private slots:
     void frameCodePiontValidator(const QString &currentText);
     void exchaneSize();
     void openFile();
+    void openFolder();
     void about();
     void help();
 

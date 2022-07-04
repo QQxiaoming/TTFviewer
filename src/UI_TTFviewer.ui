@@ -261,6 +261,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="openFolder_PushButton">
+          <property name="text">
+           <string>Open folder</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="about_PushButton">
           <property name="text">
            <string>About</string>

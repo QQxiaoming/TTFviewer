@@ -132,6 +132,7 @@ TTFviewer::TTFviewer(QWidget *parent) :
 
     QObject::connect(ui->exchange_PushButton, SIGNAL(clicked()), this, SLOT(exchaneSize()));
     QObject::connect(ui->openFile_PushButton, SIGNAL(clicked()), this, SLOT(openFile()));
+    QObject::connect(ui->openFolder_PushButton, SIGNAL(clicked()), this, SLOT(openFolder()));
     QObject::connect(ui->about_PushButton, SIGNAL(clicked()), this, SLOT(about()));
     QObject::connect(ui->help_PushButton, SIGNAL(clicked()), this, SLOT(help()));
     imgViewer = nullptr;
@@ -416,6 +417,36 @@ void TTFviewer::openFile()
             QFileInfo file(openfile_list[0]);
             TTFviewerConfigFile->config_dict.lastPath = file.absolutePath();
             imgView(openfile_list);
+        }
+    }
+}
+
+void TTFviewer::openFolder()
+{
+    if(updateConfig())
+    {
+        QString openDir = "";
+        QFileInfo lastPath(TTFviewerConfigFile->config_dict.lastPath);
+        if(lastPath.isDir())
+        {
+            openDir = TTFviewerConfigFile->config_dict.lastPath;
+        }
+        QString openfolder_name = QFileDialog::getExistingDirectory(this, "选择文件夹", openDir);
+        if (!openfolder_name.isEmpty())
+        {
+            TTFviewerConfigFile->config_dict.lastPath = openfolder_name;
+            QDir dir(openfolder_name);
+            QStringList nameFilters = {"*.ttf","*.data","*.raw"};
+            QStringList openfilename_list = dir.entryList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
+            QStringList openfile_list;
+            foreach (QString file_name, openfilename_list)
+            {
+                openfile_list.append(QDir::toNativeSeparators(openfolder_name + '/' +file_name));
+            }
+            if(openfile_list.size() != 0)
+            {
+                imgView(openfile_list);
+            }
         }
     }
 }
