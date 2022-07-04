@@ -72,6 +72,7 @@ win32:{
     LIBS += $${FREETPE2_DIR}\lib\libfreetype.a
 
     VERSION = $${YVYVIEWER_VERSION}.000
+    RC_ICONS = "img\ico.ico"
     QMAKE_TARGET_PRODUCT = "TTFviewer"
     QMAKE_TARGET_DESCRIPTION = "TTFviewer based on Qt $$[QT_VERSION]"
     QMAKE_TARGET_COPYRIGHT = "GNU General Public License v3.0"

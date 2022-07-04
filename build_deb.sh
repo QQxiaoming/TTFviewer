@@ -34,7 +34,7 @@ cp ./build_release/out/TTFviewer ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86
 # 使用linuxdeployqt拷贝依赖so库到打包目录
 ./tools/linuxdeployqt ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer -appimage
 rm -rf ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/doc ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/default.png ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/AppRun ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/default.desktop
-#cp ./img/ico.png ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer.png
+cp ./img/ico.png ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer.png
 # 配置打包信息
 sed -i "s/#VERSION#/$YVYVIEWER_MAJARVERSION.$YVYVIEWER_SUBVERSION$YVYVIEWER_REVISION/g" ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64/DEBIAN/control
 SIZE=$(du -sh -B 1024 ./dpkg/TTFviewer_Linux_"$YVYVIEWER_VERSION"_x86_64 | sed "s/.\///g")
