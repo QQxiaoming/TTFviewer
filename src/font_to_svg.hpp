@@ -316,8 +316,8 @@ public:
         for ( int i = 0 ; i < ftoutline.n_points ; i++ )
             ftpoints[i].y *= -1;
 
-        bbheight = face->bbox.yMax - face->bbox.yMin;
-        bbwidth = face->bbox.xMax - face->bbox.xMin;
+        bbheight = (face->bbox.yMax - face->bbox.yMin)*1.2;
+        bbwidth = (face->bbox.xMax - face->bbox.xMin)*1.2;
         tags = ftoutline.tags;
         contours = ftoutline.contours;
         DEBUG_OUT << debug.str();
