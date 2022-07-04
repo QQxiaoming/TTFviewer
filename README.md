@@ -27,8 +27,8 @@ TTFviewer is a small tool for developers to view and preview various ttf font/ic
 
 Currently supported formats include:
 
-ttf
+ttf\ttf_verbose
 
 ## Build
 
-(TODO)
+　> [Build documentation](./DEVELOPNOTE.md)
