@@ -11,12 +11,26 @@
 #include <QList>
 #include <QMap>
 
-typedef QList<QPixmap *> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
+class SvgInfo {
+public:
+    bool operator==(const SvgInfo &l) 
+    {
+        if((l.src == src)&&(l.W == W)&&(l.H == H)&&(l.codepoint == codepoint)) return true;
+        else return false;
+    }
+    QString *src;
+    int W;
+    int H;
+    int codepoint;
+};
+
+typedef QList<SvgInfo> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
+
 
 class TTF2RGB
 {
 public:
-    static QList<QPixmap *> ttf(QString ttffilename,int W, int H, int codepoint);
+    static QList<SvgInfo> ttf(QString ttffilename,int W, int H, int codepoint);
     static QMap<QString, ttfdecoder_t> ttfdecoder_map;
 };
 

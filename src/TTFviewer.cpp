@@ -93,11 +93,13 @@ TTFviewer::TTFviewer(QWidget *parent) :
         ui->frameSizeType_ComboBox->setEnabled(false);
         ui->frameSize_Width_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Width);
         ui->frameSize_Height_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Height);
+        ui->frameCodePiont_LineEdit->setText(TTFviewerConfigFile->config_dict.frameCodePiont);
     }
     else
     {
         ui->frameSizeType_Combo_RadioButton->setChecked(true);
         ui->frameSizeType_ComboBox->setEnabled(true);
+        ui->frameCodePiont_LineEdit->setText(TTFviewerConfigFile->config_dict.frameCodePiont);
         QList<QPair<QString, QStringList>>::const_iterator config_it = frameSizeTypeDict.begin();
         while (config_it != frameSizeTypeDict.end()) {
             if(config_it->first == TTFviewerConfigFile->config_dict.frameSizeType)
@@ -126,6 +128,7 @@ TTFviewer::TTFviewer(QWidget *parent) :
 
     QObject::connect(ui->frameSize_Height_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameSizeHeightValidator(const QString &)));
     QObject::connect(ui->frameSize_Width_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameSizeWidthValidator(const QString &)));
+    QObject::connect(ui->frameCodePiont_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameCodePiontValidator(const QString &)));
 
     QObject::connect(ui->exchange_PushButton, SIGNAL(clicked()), this, SLOT(exchaneSize()));
     QObject::connect(ui->openFile_PushButton, SIGNAL(clicked()), this, SLOT(openFile()));
@@ -237,6 +240,32 @@ void TTFviewer::frameSizeWidthValidator(const QString &currentText)
     }
 }
 
+void TTFviewer::frameCodePiontValidator(const QString &currentText)
+{
+    bool isInt;
+    if((currentText.size() == 1)&&(currentText.at(0) == '*')) {
+        ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
+        return;
+    }
+    int currentVale = currentText.toInt(&isInt, 16);
+    if(isInt == true)
+    {
+        if((currentVale >= 0) && (currentVale <= 0x10FFFF))
+        {
+            ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
+        }
+        else
+        {
+            QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "CodePiont must be 0-0x10FFFF or *");
+            ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
+        }
+    }
+    else
+    {
+        QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "Width must be num or *");
+        ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
+    }
+}
 
 void TTFviewer::exchaneSize() 
 { 
@@ -269,7 +298,24 @@ bool TTFviewer::updateConfig(void)
         showParaErrMessageBox();
         return false;
     }
-
+    QString temp_CodePiontQStr = ui->frameCodePiont_LineEdit->text();
+    int temp_CodePiont = temp_CodePiontQStr.toInt(&isInt,16);
+    if(!isInt)
+    {
+        if(!((temp_CodePiontQStr.size() == 1)&&(temp_CodePiontQStr.at(0) == '*'))) 
+        {
+            showParaErrMessageBox();
+            return false;
+        }
+    } 
+    else 
+    {
+        if(!((temp_CodePiont >= 0) && (temp_CodePiont <= 0x10FFFF)))
+        {
+            showParaErrMessageBox();
+            return false;
+        }
+    }
 
     if(((temp_Width % 2) == 0) && ((temp_Height % 2) == 0) && (temp_Width > 0) && (temp_Height > 0))
     {
@@ -284,6 +330,7 @@ bool TTFviewer::updateConfig(void)
         TTFviewerConfigFile->config_dict.TTFFormat = ui->TTFFormat_ComboBox->currentText();
         TTFviewerConfigFile->config_dict.frameSize_Width = ui->frameSize_Width_LineEdit->text();
         TTFviewerConfigFile->config_dict.frameSize_Height = ui->frameSize_Height_LineEdit->text();
+        TTFviewerConfigFile->config_dict.frameCodePiont = ui->frameCodePiont_LineEdit->text();
 
         return true;
     }
@@ -308,7 +355,9 @@ bool TTFviewer::imgView(QStringList openfile_list)
     imgViewer = new ImgViewer(nullptr,this);
     int frameSize_Width = ui->frameSize_Width_LineEdit->text().toInt();
     int frameSize_Height = ui->frameSize_Height_LineEdit->text().toInt();
-    int frameCodePiont = ui->frameCodePiont_LineEdit->text().toInt();
+    bool isInt;
+    int frameCodePiont = ui->frameCodePiont_LineEdit->text().toInt(&isInt,16);
+    if(!isInt) frameCodePiont = -1;
     #if 1
     // 多线程
     bool isSuccess = imgViewer->setFileList_multithreading(openfile_list,

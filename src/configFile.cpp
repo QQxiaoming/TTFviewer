@@ -17,9 +17,7 @@ ConfigFile::ConfigFile(QString path)
     config_dict.TTFFormat = "ttf";
     config_dict.frameSize_Width = "2560";
     config_dict.frameSize_Height = "1920";
-    config_dict.frameRate = "30";
-    config_dict.startFrame = "0";
-    config_dict.endFrame = "0";
+    config_dict.frameCodePiont = "*";
 
     configFilePath = path;
 
@@ -38,6 +36,7 @@ ConfigFile::ConfigFile(QString path)
         writer.writeTextElement("TTFFormat", config_dict.TTFFormat);
         writer.writeTextElement("frameSize_Width", config_dict.frameSize_Width);
         writer.writeTextElement("frameSize_Height", config_dict.frameSize_Height);
+        writer.writeTextElement("frameCodePiont", config_dict.frameCodePiont);
         writer.writeEndElement();
         writer.writeEndDocument();
         file.close();
@@ -72,6 +71,10 @@ ConfigFile::ConfigFile(QString path)
                 {
                     config_dict.frameSize_Height = reader.readElementText();
                 }
+                else if(reader.name() == "frameCodePiont")
+                {
+                    config_dict.frameCodePiont = reader.readElementText();
+                }
             }
             reader.readNext();
         }
@@ -94,6 +97,7 @@ ConfigFile::~ConfigFile()
     writer.writeTextElement("TTFFormat", config_dict.TTFFormat);
     writer.writeTextElement("frameSize_Width", config_dict.frameSize_Width);
     writer.writeTextElement("frameSize_Height", config_dict.frameSize_Height);
+    writer.writeTextElement("frameCodePiont", config_dict.frameCodePiont);
     writer.writeEndElement();
     writer.writeEndDocument();
     file.close();

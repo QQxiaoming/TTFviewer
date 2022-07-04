@@ -54,6 +54,13 @@ namespace font2svg {
 
 std::stringstream debug;
 
+#if 0
+#define DEBUG_OUT std::cout
+#else
+std::ostream out_null(0);
+#define DEBUG_OUT out_null
+#endif
+
 FT_Vector halfway_between( FT_Vector p1, FT_Vector p2 )
 {
     FT_Vector newv;
@@ -116,7 +123,7 @@ There are three main components.
 std::string do_outline(std::vector<FT_Vector> points, std::vector<char> tags, std::vector<short> contours)
 {
     std::stringstream debug, svg;
-    std::cout << "<!-- do outline -->\n";
+    DEBUG_OUT << "<!-- do outline -->\n";
     if (points.size()==0) return "<!-- font had 0 points -->";
     if (contours.size()==0) return "<!-- font had 0 contours -->";
     svg.str("");
@@ -210,7 +217,7 @@ std::string do_outline(std::vector<FT_Vector> points, std::vector<char> tags, st
         svg << " Z\n";
     }
     svg << "\n  '/>";
-    std::cout << "\n<!--\n" << debug.str() << " \n-->\n";
+    DEBUG_OUT << "\n<!--\n" << debug.str() << " \n-->\n";
     return svg.str();
 }
 
@@ -223,6 +230,7 @@ public:
     FT_Outline ftoutline;
     FT_Glyph_Metrics gm;
     FT_Face face;
+    FT_UInt glyph_index;
     ttf_file file;
 
     FT_Vector* ftpoints;
@@ -250,6 +258,12 @@ public:
         init( std::string(unicode_c_str) );
     }
 
+    glyph( ttf_file &f, int unicode )
+    {
+        file = f;
+        init( unicode );
+    }
+
     glyph( const char * filename, int unicode )
     {
         this->file = ttf_file( std::string(filename) );
@@ -273,7 +287,7 @@ public:
         face = file.face;
         codepoint = unicode;
         // Load the Glyph into the face's Glyph Slot + print details
-        FT_UInt glyph_index = FT_Get_Char_Index( face, codepoint );
+        glyph_index = FT_Get_Char_Index( face, codepoint );
         debug << " (decimal: " << codepoint << " hex: 0x"
             << std::hex << codepoint << std::dec << ")";
         debug << "\nGlyph index for unicode: " << glyph_index;
@@ -306,7 +320,7 @@ public:
         bbwidth = face->bbox.xMax - face->bbox.xMin;
         tags = ftoutline.tags;
         contours = ftoutline.contours;
-        std::cout << debug.str();
+        DEBUG_OUT << debug.str();
     }
 
     std::string svgheader() {

@@ -16,9 +16,7 @@ typedef struct
     QString TTFFormat;
     QString frameSize_Width;
     QString frameSize_Height;
-    QString frameRate;
-    QString startFrame;
-    QString endFrame;
+    QString frameCodePiont;
 }config_dict_t;
 
 class ConfigFile

@@ -33,6 +33,7 @@ private slots:
     void changeFrameSizeType(const QString &text);
     void frameSizeHeightValidator(const QString &currentText);
     void frameSizeWidthValidator(const QString &currentText);
+    void frameCodePiontValidator(const QString &currentText);
     void exchaneSize();
     void openFile();
     void about();
