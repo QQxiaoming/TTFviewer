@@ -270,6 +270,12 @@ public:
         init( unicode );
     }
 
+    glyph( std::string fname, int unicode )
+    {
+        this->file = ttf_file( fname );
+        init( unicode );
+    }
+
     void free()
     {
         file.free();

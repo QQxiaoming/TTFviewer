@@ -75,10 +75,9 @@ QList<SvgInfo> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint)
 QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepoint)
 {
     QList<SvgInfo> rgbImglist;
-    QByteArray naBA = ttffilename.toLatin1();
 
     if(codepoint == -1) {
-        font2svg::ttf_file tfile(std::string(naBA.constData()));
+        font2svg::ttf_file tfile(ttffilename.toStdString());
         for(int index = 0;index<=0x10FFFF;index++) {
             font2svg::glyph g(tfile, index);
             if(g.glyph_index != 0) {
@@ -107,7 +106,7 @@ QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepo
     }
     else
     {
-        font2svg::glyph g(naBA.constData(), codepoint );
+        font2svg::glyph g(ttffilename.toStdString(), codepoint );
         SvgInfo info;
         info.src = new QString(
             QString::fromStdString(
