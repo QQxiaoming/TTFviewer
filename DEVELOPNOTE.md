@@ -24,7 +24,7 @@ set "QT_TOOLS_DIR=C:/Qt/Qt5.12.8/Tools/mingw730_32/bin"
 :: 定义Inno Setup目录
 set "INNO_SETUP_DIR=C:/Program Files (x86)/Inno Setup 6"
 :: 定义版本号
-set "YVYVIEWER_VERSION=0.1.0"
+set "TTFVIEWER_VERSION=0.1.0"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ```
 

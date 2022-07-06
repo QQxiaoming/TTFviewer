@@ -7,7 +7,7 @@ set "QT_TOOLS_DIR=C:/Qt/Qt5.12.8/Tools/mingw730_32/bin"
 :: 定义Inno Setup目录
 set "INNO_SETUP_DIR=C:/Program Files (x86)/Inno Setup 6"
 :: 定义版本号
-set "YVYVIEWER_VERSION=0.1.0"
+set "TTFVIEWER_VERSION=0.1.0"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -30,8 +30,8 @@ if exist ".\InnoSetup\build" (
 )
 :: 配置打包信息
 copy /y .\InnoSetup\build_setup.iss .\InnoSetup\build_temp_setup.iss
-.\tools\sed\sed.exe -i "s/#VERSION#/%YVYVIEWER_VERSION%/g" .\InnoSetup\build_temp_setup.iss
-.\tools\sed\sed.exe -i "s/#VERSIONINFOVERSION#/%YVYVIEWER_VERSION%.000/g" .\InnoSetup\build_temp_setup.iss
+.\tools\sed\sed.exe -i "s/#VERSION#/%TTFVIEWER_VERSION%/g" .\InnoSetup\build_temp_setup.iss
+.\tools\sed\sed.exe -i "s/#VERSIONINFOVERSION#/%TTFVIEWER_VERSION%.000/g" .\InnoSetup\build_temp_setup.iss
 del /f /q /a .\sed*
 :: 构建打包目录
 xcopy /y .\build_release\out\TTFviewer.exe .\InnoSetup\build\
