@@ -117,8 +117,9 @@ jobs:
       - name: Build depend
         shell: msys2 {0}
         run: |
-          pacman --noconfirm -S make gcc
+          pacman --noconfirm -S make
           cd depend
+          export PATH=/c/ProgramData/Chocolatey/lib/mingw/tools/install/mingw64/bin:$PATH
           ./build_ms.sh
 
       - name: Build all
