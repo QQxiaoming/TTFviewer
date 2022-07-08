@@ -25,54 +25,36 @@ QMap<QString, ttfdecoder_t> TTF2RGB::ttfdecoder_map =
 
 QList<SvgInfo> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint)
 {
-    QList<SvgInfo> rgbImglist;
-    QByteArray naBA = ttffilename.toLatin1();
-
-    if(codepoint == -1) {
-        font2svg::ttf_file tfile(std::string(naBA.constData()));
-        for(int index = 0;index<=0x10FFFF;index++) {
-            font2svg::glyph g(tfile, index);
-            if(g.glyph_index != 0) {
-                SvgInfo info;
-                info.src = new QString(
-                    QString::fromStdString(
-                        g.svgheader() +
-                        g.svgtransform() +
-                        g.outline() +
-                        g.svgfooter()
-                    )
-                );
-                info.H = H;
-                info.W = W;
-                info.codepoint = index;
-                rgbImglist.append(info);
-            }
-        }
-        tfile.free();
-    }
-    else
-    {
-        font2svg::glyph g(naBA.constData(), codepoint );
-        SvgInfo info;
-        info.src = new QString(
-            QString::fromStdString(
-                g.svgheader() +
-                g.svgtransform() +
-                g.outline() +
-                g.svgfooter()
-            )
-        );
-        info.H = H;
-        info.W = W;
-        info.codepoint = codepoint;
-        rgbImglist.append(info);
-        g.free();
-    }
-
-    return rgbImglist;
+    return ttf_decode(ttffilename,W,H,codepoint,false);
 }
 
 QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepoint)
+{
+    return ttf_decode(ttffilename,W,H,codepoint,true);
+}
+
+std::string TTF2RGB::ttf_glyph_out(void *glyph, bool verbose)
+{
+    font2svg::glyph *g = static_cast<font2svg::glyph *>(glyph);
+    if(verbose) 
+        return g->svgheader()      +
+               g->svgborder()      +
+               g->svgtransform()   +
+               g->axes()           +
+               g->typography_box() +
+               g->points()         +
+               g->pointlines()     +
+               g->outline()        +
+               g->labelpts()       +
+               g->svgfooter();
+    else 
+        return g->svgheader()      +
+               g->svgtransform()   +
+               g->outline()        +
+               g->svgfooter();
+}
+
+QList<SvgInfo> TTF2RGB::ttf_decode(QString ttffilename,int W, int H, int codepoint,bool verbose)
 {
     QList<SvgInfo> rgbImglist;
 
@@ -82,20 +64,7 @@ QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepo
             font2svg::glyph g(tfile, index);
             if(g.glyph_index != 0) {
                 SvgInfo info;
-                info.src = new QString(
-                    QString::fromStdString(
-                        g.svgheader() +
-                        g.svgborder() +
-                        g.svgtransform() +
-                        g.axes() +
-                        g.typography_box() +
-                        g.points() +
-                        g.pointlines() +
-                        g.outline() +
-                        g.labelpts() +
-                        g.svgfooter()
-                    )
-                );
+                info.src = new QString(QString::fromStdString(ttf_glyph_out(&g,verbose)));
                 info.H = H;
                 info.W = W;
                 info.codepoint = index;
@@ -108,20 +77,7 @@ QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepo
     {
         font2svg::glyph g(ttffilename.toStdString(), codepoint );
         SvgInfo info;
-        info.src = new QString(
-            QString::fromStdString(
-                g.svgheader() +
-                g.svgborder() +
-                g.svgtransform() +
-                g.axes() +
-                g.typography_box() +
-                g.points() +
-                g.pointlines() +
-                g.outline() +
-                g.labelpts() +
-                g.svgfooter()
-            )
-        );
+        info.src = new QString(QString::fromStdString(ttf_glyph_out(&g,verbose)));
         info.H = H;
         info.W = W;
         info.codepoint = codepoint;

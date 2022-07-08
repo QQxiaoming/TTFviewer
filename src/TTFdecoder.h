@@ -33,6 +33,9 @@ public:
     static QList<SvgInfo> ttf(QString ttffilename,int W, int H, int codepoint);
     static QList<SvgInfo> ttf_verbose(QString ttffilename,int W, int H, int codepoint);
     static QMap<QString, ttfdecoder_t> ttfdecoder_map;
+private:
+    static std::string ttf_glyph_out(void *glyph, bool verbose);
+    static QList<SvgInfo> ttf_decode(QString ttffilename,int W, int H, int codepoint,bool verbose);
 };
 
 
