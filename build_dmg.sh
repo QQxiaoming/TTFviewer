@@ -7,7 +7,7 @@ QT_DIR=/opt/Qt5.12.2/5.12.2/gcc_64
 # 定义版本号
 TTFVIEWER_MAJARVERSION="0"
 TTFVIEWER_SUBVERSION="1"
-TTFVIEWER_REVISION="0"
+TTFVIEWER_REVISION="1"
 ###############################################################################
 
 
