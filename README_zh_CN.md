@@ -3,6 +3,7 @@
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/QQxiaoming/TTFviewer/total.svg)](https://github.com/QQxiaoming/TTFviewer/releases)
 [![GitHub stars](https://img.shields.io/github/stars/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
+[![GitHub forks](https://img.shields.io/github/forks/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
 
 # TTFviewer
 
@@ -22,6 +23,37 @@ TTFviewer一款用于开发人员查看预览各种ttf字体/图标图像格式�
     - 双击左键保存图像为svg格式，
     - 单击右键复位图像大小和位置，
     - 单击中键显示图像原始大小。
+
+### codepoint参数填写说明
+
+关于codepoint参数存在以下合法输入：
+
+1. 输入单个字符，此时ttfviewer会显示该字符unicode对应在目标ttf文件中的图像。示例：
+
+    ![img11](./img/docimg11.png)![img10](./img/docimg10.png)
+
+    ![img31](./img/docimg31.png)![img30](./img/docimg30.png)
+
+    ![img51](./img/docimg51.png)![img50](./img/docimg50.png)
+
+
+2. 输入0x或0X开头的16进制unicode码值，此时ttfviewer会显示该unicode码值对应在目标ttf文件中的图像。示例：
+
+    ![img21](./img/docimg21.png)![img20](./img/docimg20.png)
+
+    ![img41](./img/docimg41.png)![img40](./img/docimg40.png)
+
+    ![img61](./img/docimg61.png)![img60](./img/docimg60.png)
+
+3. 输入通配符*，此时ttfviewer会搜索目标ttf文件中的所有图像显示（可能消耗较多系统内存），点击左右切换浏览，示例：
+
+    ![img74](./img/docimg74.png)
+    
+    ![img70](./img/docimg70.png)![img71](./img/docimg71.png)![img72](./img/docimg72.png)![img73](./img/docimg73.png)
+
+4. 输入两个通配符*，此时ttfviewer会显示通配符本身（即：0x2a）对应在目标ttf文件中的图像。示例：
+
+    ![img81](./img/docimg81.png)![img80](./img/docimg80.png)
 
 ## 格式支持
 

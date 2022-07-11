@@ -243,27 +243,13 @@ void TTFviewer::frameSizeWidthValidator(const QString &currentText)
 
 void TTFviewer::frameCodePiontValidator(const QString &currentText)
 {
-    bool isInt;
-    if((currentText.size() == 1)&&(currentText.at(0) == '*')) {
-        ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
-        return;
-    }
-    int currentVale = currentText.toInt(&isInt, 16);
-    if(isInt == true)
+    if(isCodePiontValidate(currentText))
     {
-        if((currentVale >= 0) && (currentVale <= 0x10FFFF))
-        {
-            ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
-        }
-        else
-        {
-            QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "CodePiont must be 0-0x10FFFF or *");
-            ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
-        }
+        ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
     }
     else
     {
-        QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "Width must be num or *");
+        QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "Codepoint must be 0x0-0x10FFFF or single char or * or **");
         ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
     }
 }
@@ -284,6 +270,53 @@ void TTFviewer::showParaErrMessageBox(void)
     QMessageBox::critical(this, "Error", "parameter invalid!!", QMessageBox::Ok);
 }
 
+bool TTFviewer::isCodePiontValidate(const QString &str,int *codepoint)
+{
+    bool isInt;
+    if((str.size() == 1)&&(str.at(0) == '*')) {
+        if(codepoint) *codepoint = -1;
+        return true;
+    }
+    int vale = str.toInt(&isInt, 16);
+    if((isInt == true)&&(str.size() > 2)&&(str.at(0) == '0')&&((str.at(1) == 'x')||(str.at(1) == 'X')))
+    {
+        if((vale >= 0) && (vale <= 0x10FFFF))
+        {
+            if(codepoint) *codepoint = vale;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if(str.size() == 1)
+        {
+            vale = *(int *)str.unicode();
+            if((vale >= 0) && (vale <= 0x10FFFF))
+            {
+                if(codepoint) *codepoint = vale;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if((str.size() == 2)&&(str.at(0) == '*')&&(str.at(1) == '*'))
+        {
+            if(codepoint) *codepoint = 0x2a;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
 bool TTFviewer::updateConfig(void)
 {
     bool isInt;
@@ -300,22 +333,10 @@ bool TTFviewer::updateConfig(void)
         return false;
     }
     QString temp_CodePiontQStr = ui->frameCodePiont_LineEdit->text();
-    int temp_CodePiont = temp_CodePiontQStr.toInt(&isInt,16);
-    if(!isInt)
+    if(!isCodePiontValidate(temp_CodePiontQStr))
     {
-        if(!((temp_CodePiontQStr.size() == 1)&&(temp_CodePiontQStr.at(0) == '*'))) 
-        {
-            showParaErrMessageBox();
-            return false;
-        }
-    } 
-    else 
-    {
-        if(!((temp_CodePiont >= 0) && (temp_CodePiont <= 0x10FFFF)))
-        {
-            showParaErrMessageBox();
-            return false;
-        }
+        showParaErrMessageBox();
+        return false;
     }
 
     if(((temp_Width % 2) == 0) && ((temp_Height % 2) == 0) && (temp_Width > 0) && (temp_Height > 0))
@@ -356,9 +377,8 @@ bool TTFviewer::imgView(QStringList openfile_list)
     imgViewer = new ImgViewer(nullptr,this);
     int frameSize_Width = ui->frameSize_Width_LineEdit->text().toInt();
     int frameSize_Height = ui->frameSize_Height_LineEdit->text().toInt();
-    bool isInt;
-    int frameCodePiont = ui->frameCodePiont_LineEdit->text().toInt(&isInt,16);
-    if(!isInt) frameCodePiont = -1;
+    int frameCodePiont;
+    isCodePiontValidate(ui->frameCodePiont_LineEdit->text(),&frameCodePiont);
     #if 1
     // 多线程
     bool isSuccess = imgViewer->setFileList_multithreading(openfile_list,

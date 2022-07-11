@@ -47,6 +47,7 @@ private:
     void showParaErrMessageBox(void);
     bool updateConfig(void);
     bool imgView(QStringList openfile_list);
+    bool isCodePiontValidate(const QString &str,int *codepoint=nullptr);
     Ui::TTFviewer *ui;
     ConfigFile *TTFviewerConfigFile;
     ImgViewer *imgViewer;

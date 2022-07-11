@@ -3,6 +3,7 @@
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/QQxiaoming/TTFviewer/total.svg)](https://github.com/QQxiaoming/TTFviewer/releases)
 [![GitHub stars](https://img.shields.io/github/stars/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
+[![GitHub forks](https://img.shields.io/github/forks/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
 
 # TTFviewer
 
@@ -22,6 +23,37 @@ TTFviewer is a small tool for developers to view and preview various ttf font/ic
     - Double click the left button to save the image as svg format,
     - Right click to reset image size and position,
     - Middle click to display the original size of the image.
+
+### codepoint parameters
+
+The following legal inputs exist for the codepoint parameter:
+
+1. Enter a single character, and ttfviewer will display the image corresponding to the character's unicode in the target ttf file. Example:
+
+    ![img11](./img/docimg11.png)![img10](./img/docimg10.png)
+
+    ![img31](./img/docimg31.png)![img30](./img/docimg30.png)
+
+    ![img51](./img/docimg51.png)![img50](./img/docimg50.png)
+
+
+2. Enter a hexadecimal unicode code value starting with 0x or 0X, and ttfviewer will display the image corresponding to the unicode code value in the target ttf file. Example:
+
+    ![img21](./img/docimg21.png)![img20](./img/docimg20.png)
+
+    ![img41](./img/docimg41.png)![img40](./img/docimg40.png)
+
+    ![img61](./img/docimg61.png)![img60](./img/docimg60.png)
+
+3. Enter the wildcard *, at this time ttfviewer will search for all image displays in the target ttf file (may consume more system memory), click left and right to switch browsing. Example:
+
+    ![img74](./img/docimg74.png)
+    
+    ![img70](./img/docimg70.png)![img71](./img/docimg71.png)![img72](./img/docimg72.png)![img73](./img/docimg73.png)
+
+4. Enter double wildcards *, then ttfviewer will display the wildcard itself (ie: 0x2a) corresponding to the image in the target ttf file. Example:
+
+    ![img81](./img/docimg81.png)![img80](./img/docimg80.png)
 
 ## Format
 
