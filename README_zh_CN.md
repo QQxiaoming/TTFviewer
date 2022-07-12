@@ -4,6 +4,8 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/QQxiaoming/TTFviewer/total.svg)](https://github.com/QQxiaoming/TTFviewer/releases)
 [![GitHub stars](https://img.shields.io/github/stars/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
 [![GitHub forks](https://img.shields.io/github/forks/QQxiaoming/TTFviewer.svg)](https://github.com/QQxiaoming/TTFviewer)
+[![Gitee stars](https://gitee.com/QQxiaoming/TTFviewer/badge/star.svg?theme=dark)](https://gitee.com/QQxiaoming/TTFviewer)
+[![Gitee forks](https://gitee.com/QQxiaoming/TTFviewer/badge/fork.svg?theme=dark)](https://gitee.com/QQxiaoming/TTFviewer)
 
 # TTFviewer
 
