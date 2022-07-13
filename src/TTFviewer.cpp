@@ -473,7 +473,19 @@ void TTFviewer::openFolder()
 
 void TTFviewer::about()
 {
-    QMessageBox::about(this, "About", "Version \n " + VERSION + "\nCommit \n " + GIT_TAG + "\nAuthor\n qiaoqm@aliyun.com \nWebsite\n https://github.com/QQxiaoming/TTFviewer");
+    QMessageBox::about(this, tr("About"),
+        tr(
+            "<p>Version</p>"
+            "<p>&nbsp;%1</p>"
+            "<p>Commit</p>"
+            "<p>&nbsp;%2</p>"
+            "<p>Author</p>"
+            "<p>&nbsp;qiaoqm@aliyun.com</p>"
+            "<p>Website</p>"
+            "<p>&nbsp;<a href='https://github.com/QQxiaoming/TTFviewer'>https://github.com/QQxiaoming</p>"
+            "<p>&nbsp;<a href='https://gitee.com/QQxiaoming/TTFviewer'>https://gitee.com/QQxiaoming</a></p>"
+        ).arg(VERSION,GIT_TAG)
+    );
 }
 
 void TTFviewer::help()
