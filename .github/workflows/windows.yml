@@ -1,0 +1,68 @@
+name: windows
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+      - 'README_zh_CN.md'
+      - 'DEVELOPNOTE.md'
+      - '.readthedocs.yaml'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+      - 'README_zh_CN.md'
+      - 'DEVELOPNOTE.md'
+      - '.readthedocs.yaml'
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-2022
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          arch: win64_mingw81
+
+      - name: Install prerequisites
+        run: |
+          Choco-Install -PackageName innosetup --force
+          Choco-Install -PackageName cmake --force
+
+      - uses: msys2/setup-msys2@v2
+
+      - name: Build depend
+        shell: msys2 {0}
+        run: |
+          pacman --noconfirm -S make
+          cd depend
+          export PATH=/c/ProgramData/Chocolatey/lib/mingw/tools/install/mingw64/bin:$PATH
+          ./build_ms.sh
+
+      - name: Build all
+        run: |
+          git fetch --tags --force
+          git describe --always --long --abbrev=10 --tags | ./tools/awk/awk.exe '{print \"\\\"\"$0\"\\\"\"}'  > git_tag.inc
+          ./tools/sed/sed.exe -i "s/git_tag.inc/git_tag.ci.inc/g" TTFviewer.pro
+          ./tools/sed/sed.exe -i "s/QT_DIR=C:\/Qt\/Qt5.12.8\/5.12.8\/mingw73_32\/bin/QT_DIR=%Qt5_Dir%/g" ./build_setup.bat
+          ./tools/sed/sed.exe -i "s/QT_TOOLS_DIR=C:\/Qt\/Qt5.12.8\/Tools\/mingw730_32\/bin/QT_TOOLS_DIR=C:\/ProgramData\/Chocolatey\/lib\/mingw\/tools\/install\/mingw64\/x86_64-w64-mingw32\/bin/g" ./build_setup.bat
+          ./tools/sed/sed.exe -i "s/FREETPE2_DIR=D:\\ttfviewer\\depend\\freetype/FREETPE2_DIR=D:\\freetype/g" ./partform_win32.pri
+          ./build_setup.bat
+
+      - name: Upload build asserts
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: TTFviewer_windows
+          path: |
+            ./InnoSetup/TTFviewer_setup.exe
+
+      - name: Run tests
+        run: |
+          ./InnoSetup/build/TTFviewer.exe --version

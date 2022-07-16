@@ -1,0 +1,59 @@
+name: macos
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+      - 'README_zh_CN.md'
+      - 'DEVELOPNOTE.md'
+      - '.readthedocs.yaml'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+      - 'README_zh_CN.md'
+      - 'DEVELOPNOTE.md'
+      - '.readthedocs.yaml'
+  workflow_dispatch:
+
+jobs:
+  macos:
+    runs-on: macos-12
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+
+      - name: Install prerequisites
+        run: |
+          ruby - e  "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null  2 > /dev/null
+          brew install --build-from-source cmake
+
+      - name: Build all
+        run: |
+          git fetch --tags --force
+          git describe --always --long --dirty --abbrev=10 --tags | awk '{print "\""$0"\""}' > git_tag.inc
+          sed -i'.original' -e 's/git_tag.inc/git_tag.ci.inc/g' TTFviewer.pro
+          sed -i'.original' -e 's/QT_DIR=\/opt/QT_DIR=$(cd "$(dirname "$0")";pwd)/g' build_dmg.sh
+          sed -i'.original' -e 's/\/home\/qqm\/Desktop\/ttfviewer\/depend\/freetype/\/usr\/local\/ttfviewer/g' partform_unix.pri
+          cd depend
+          sudo ./build.sh
+          cd -
+          ./build_dmg.sh
+
+      - name: Upload build asserts
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: TTFviewer_macos
+          path: |
+            ./build_release/out/TTFviewer.dmg
+
+      - name: Run tests
+        run: |
+          sudo hdiutil attach ./build_release/out/TTFviewer.dmg
+          /Volumes/TTFviewer/TTFviewer.app/Contents/MacOS/TTFviewer --version
