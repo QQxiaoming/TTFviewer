@@ -16,8 +16,7 @@ namespace Ui {
 class TTFviewer;
 }
 
-class TTFviewer : public QMainWindow
-{
+class TTFviewer : public QMainWindow {
     Q_OBJECT
 
 public:

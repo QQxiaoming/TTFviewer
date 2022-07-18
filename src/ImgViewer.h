@@ -23,8 +23,7 @@ namespace Ui {
 class ImgViewerWindow;
 }
 
-class TTFDecodeThread : public QThread
-{
+class TTFDecodeThread : public QThread {
     Q_OBJECT
 
 public:
@@ -48,8 +47,7 @@ private:
     ttfdecoder_t decoder;
 };
 
-class ImgViewer : public QWidget
-{
+class ImgViewer : public QWidget {
     Q_OBJECT
 
 public:

@@ -59,9 +59,7 @@ const QList<QPair<QString, QStringList>> TTFviewer::frameSizeTypeDict = {
 };
 
 TTFviewer::TTFviewer(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::TTFviewer)
-{
+    QMainWindow(parent), ui(new Ui::TTFviewer) {
     ui->setupUi(this);
 
     this->setWindowTitle("TTFviewer " + VERSION);
@@ -87,23 +85,19 @@ TTFviewer::TTFviewer(QWidget *parent) :
     }
 
     TTFviewerConfigFile = new ConfigFile(QDir::homePath()+"/.TTFviewer/TTFviewer.xml");
-    if(TTFviewerConfigFile->config_dict.frameSizeType == "Other")
-    {
+    if(TTFviewerConfigFile->config_dict.frameSizeType == "Other") {
         ui->frameSizeType_Other_RadioButton->setChecked(true);
         ui->frameSizeType_ComboBox->setEnabled(false);
         ui->frameSize_Width_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Width);
         ui->frameSize_Height_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Height);
         ui->frameCodePiont_LineEdit->setText(TTFviewerConfigFile->config_dict.frameCodePiont);
-    }
-    else
-    {
+    } else {
         ui->frameSizeType_Combo_RadioButton->setChecked(true);
         ui->frameSizeType_ComboBox->setEnabled(true);
         ui->frameCodePiont_LineEdit->setText(TTFviewerConfigFile->config_dict.frameCodePiont);
         QList<QPair<QString, QStringList>>::const_iterator config_it = frameSizeTypeDict.begin();
         while (config_it != frameSizeTypeDict.end()) {
-            if(config_it->first == TTFviewerConfigFile->config_dict.frameSizeType)
-            {
+            if(config_it->first == TTFviewerConfigFile->config_dict.frameSizeType) {
                 QStringList value = config_it->second;
                 ui->frameSizeType_ComboBox->setCurrentText(TTFviewerConfigFile->config_dict.frameSizeType);
                 ui->frameSize_Width_LineEdit->setText(value[0]);
@@ -118,17 +112,17 @@ TTFviewer::TTFviewer(QWidget *parent) :
         }
     }
 
-
-    QList<uint64_t> color_list;
-
-
     QObject::connect(ui->frameSizeType_Combo_RadioButton, SIGNAL(clicked()), this, SLOT(configComboBox()));
     QObject::connect(ui->frameSizeType_Other_RadioButton, SIGNAL(clicked()), this, SLOT(configOther()));
-    QObject::connect(ui->frameSizeType_ComboBox, SIGNAL(currentTextChanged(const QString &)), this,SLOT(changeFrameSizeType(const QString &)));
+    QObject::connect(ui->frameSizeType_ComboBox, SIGNAL(currentTextChanged(const QString &)), 
+                                                    this,SLOT(changeFrameSizeType(const QString &)));
 
-    QObject::connect(ui->frameSize_Height_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameSizeHeightValidator(const QString &)));
-    QObject::connect(ui->frameSize_Width_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameSizeWidthValidator(const QString &)));
-    QObject::connect(ui->frameCodePiont_LineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(frameCodePiontValidator(const QString &)));
+    QObject::connect(ui->frameSize_Height_LineEdit, SIGNAL(textEdited(const QString &)), 
+                                                    this, SLOT(frameSizeHeightValidator(const QString &)));
+    QObject::connect(ui->frameSize_Width_LineEdit, SIGNAL(textEdited(const QString &)), 
+                                                    this, SLOT(frameSizeWidthValidator(const QString &)));
+    QObject::connect(ui->frameCodePiont_LineEdit, SIGNAL(textEdited(const QString &)), 
+                                                    this, SLOT(frameCodePiontValidator(const QString &)));
 
     QObject::connect(ui->exchange_PushButton, SIGNAL(clicked()), this, SLOT(exchaneSize()));
     QObject::connect(ui->openFile_PushButton, SIGNAL(clicked()), this, SLOT(openFile()));
@@ -138,26 +132,21 @@ TTFviewer::TTFviewer(QWidget *parent) :
     imgViewer = nullptr;
 }
 
-TTFviewer::~TTFviewer()
-{
-    if(imgViewer != nullptr)
-    {
+TTFviewer::~TTFviewer() {
+    if(imgViewer != nullptr) {
         delete imgViewer;
     }
-    if(TTFviewerConfigFile != nullptr)
-    {
+    if(TTFviewerConfigFile != nullptr) {
         delete TTFviewerConfigFile;
     }
     delete ui;
 }
 
-void TTFviewer::configComboBox()
-{
+void TTFviewer::configComboBox() {
     ui->frameSizeType_ComboBox->setEnabled(true);
     QList<QPair<QString, QStringList>>::const_iterator config_it = frameSizeTypeDict.begin();
     while (config_it != frameSizeTypeDict.end()) {
-        if(config_it->first == ui->frameSizeType_ComboBox->currentText())
-        {
+        if(config_it->first == ui->frameSizeType_ComboBox->currentText()) {
             QStringList value = config_it->second;
             ui->frameSize_Width_LineEdit->setText(value[0]);
             ui->frameSize_Width_LineEdit->setFocusPolicy(Qt::NoFocus);
@@ -169,12 +158,10 @@ void TTFviewer::configComboBox()
     }
 }
 
-void TTFviewer::changeFrameSizeType(const QString &text)
-{
+void TTFviewer::changeFrameSizeType(const QString &text) {
     QList<QPair<QString, QStringList>>::const_iterator config_it = frameSizeTypeDict.begin();
     while (config_it != frameSizeTypeDict.end()) {
-        if(config_it->first == text)
-        {
+        if(config_it->first == text) {
             QStringList value = config_it->second;
             ui->frameSize_Width_LineEdit->setText(value[0]);
             ui->frameSize_Width_LineEdit->setFocusPolicy(Qt::NoFocus);
@@ -186,8 +173,7 @@ void TTFviewer::changeFrameSizeType(const QString &text)
     }
 }
 
-void TTFviewer::configOther()
-{
+void TTFviewer::configOther() {
     ui->frameSizeType_ComboBox->setEnabled(false);
     ui->frameSize_Width_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Width);
     ui->frameSize_Height_LineEdit->setText(TTFviewerConfigFile->config_dict.frameSize_Height);
@@ -195,25 +181,20 @@ void TTFviewer::configOther()
     ui->frameSize_Height_LineEdit->setFocusPolicy(Qt::StrongFocus);
 }
 
-void TTFviewer::frameSizeHeightValidator(const QString &currentText)
-{
+void TTFviewer::frameSizeHeightValidator(const QString &currentText) {
     bool isInt;
     int currentVale = currentText.toInt(&isInt);
-    if(isInt == true)
-    {
-        if(((currentVale%2) == 0) && (currentVale > 0))
-        {
+    if(isInt == true) {
+        if(((currentVale%2) == 0) && (currentVale > 0)) {
             ui->frameSize_Height_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
-        }
-        else
-        {
-            QToolTip::showText(ui->frameSize_Height_LineEdit->mapToGlobal(QPoint(0, 10)), "Height must be positive even");
+        } else {
+            QToolTip::showText(ui->frameSize_Height_LineEdit->mapToGlobal(
+                QPoint(0, 10)), "Height must be positive even");
             ui->frameSize_Height_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
         }
-    }
-    else
-    {
-        QToolTip::showText(ui->frameSize_Height_LineEdit->mapToGlobal(QPoint(0, 10)), "Height must be num");
+    } else {
+        QToolTip::showText(ui->frameSize_Height_LineEdit->mapToGlobal(
+            QPoint(0, 10)), "Height must be num");
         ui->frameSize_Height_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
     }
 }
@@ -222,40 +203,32 @@ void TTFviewer::frameSizeWidthValidator(const QString &currentText)
 {
     bool isInt;
     int currentVale = currentText.toInt(&isInt);
-    if(isInt == true)
-    {
-        if(((currentVale%2) == 0) && (currentVale > 0))
-        {
+    if(isInt == true) {
+        if(((currentVale%2) == 0) && (currentVale > 0)) {
             ui->frameSize_Width_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
-        }
-        else
-        {
-            QToolTip::showText(ui->frameSize_Width_LineEdit->mapToGlobal(QPoint(0, 10)), "Width must be positive even");
+        } else {
+            QToolTip::showText(ui->frameSize_Width_LineEdit->mapToGlobal(
+                QPoint(0, 10)), "Width must be positive even");
             ui->frameSize_Width_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
         }
-    }
-    else
-    {
-        QToolTip::showText(ui->frameSize_Width_LineEdit->mapToGlobal(QPoint(0, 10)), "Width must be num");
+    } else {
+        QToolTip::showText(ui->frameSize_Width_LineEdit->mapToGlobal(
+            QPoint(0, 10)), "Width must be num");
         ui->frameSize_Width_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
     }
 }
 
-void TTFviewer::frameCodePiontValidator(const QString &currentText)
-{
-    if(isCodePiontValidate(currentText))
-    {
+void TTFviewer::frameCodePiontValidator(const QString &currentText) {
+    if(isCodePiontValidate(currentText)) {
         ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border:1px solid gray border-radius:1px}");
-    }
-    else
-    {
-        QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(QPoint(0, 10)), "Codepoint must be 0x0-0x10FFFF or single char or * or **");
+    } else {
+        QToolTip::showText(ui->frameCodePiont_LineEdit->mapToGlobal(
+            QPoint(0, 10)), "Codepoint must be 0x0-0x10FFFF or single char or * or **");
         ui->frameCodePiont_LineEdit->setStyleSheet("QLineEdit{border: 1px solid red;border-radius: 3px;}");
     }
 }
 
-void TTFviewer::exchaneSize() 
-{ 
+void TTFviewer::exchaneSize() { 
     ui->frameSizeType_Other_RadioButton->setChecked(true);
     ui->frameSizeType_ComboBox->setEnabled(false);
     QString width = ui->frameSize_Width_LineEdit->text();
@@ -265,53 +238,37 @@ void TTFviewer::exchaneSize()
     frameSizeHeightValidator(ui->frameSize_Height_LineEdit->text());
 }
 
-void TTFviewer::showParaErrMessageBox(void)
-{
+void TTFviewer::showParaErrMessageBox(void) {
     QMessageBox::critical(this, "Error", "parameter invalid!!", QMessageBox::Ok);
 }
 
-bool TTFviewer::isCodePiontValidate(const QString &str,int *codepoint)
-{
+bool TTFviewer::isCodePiontValidate(const QString &str,int *codepoint) {
     bool isInt;
     if((str.size() == 1)&&(str.at(0) == '*')) {
         if(codepoint) *codepoint = -1;
         return true;
     }
     int vale = str.toInt(&isInt, 16);
-    if((isInt == true)&&(str.size() > 2)&&(str.at(0) == '0')&&((str.at(1) == 'x')||(str.at(1) == 'X')))
-    {
-        if((vale >= 0) && (vale <= 0x10FFFF))
-        {
+    if((isInt == true)&&(str.size() > 2)&&(str.at(0) == '0')&&((str.at(1) == 'x')||(str.at(1) == 'X'))) {
+        if((vale >= 0) && (vale <= 0x10FFFF)) {
             if(codepoint) *codepoint = vale;
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
-    }
-    else
-    {
-        if(str.size() == 1)
-        {
+    } else {
+        if(str.size() == 1) {
             vale = *(int *)str.unicode();
-            if((vale >= 0) && (vale <= 0x10FFFF))
-            {
+            if((vale >= 0) && (vale <= 0x10FFFF)) {
                 if(codepoint) *codepoint = vale;
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        else if((str.size() == 2)&&(str.at(0) == '*')&&(str.at(1) == '*'))
-        {
+        } else if((str.size() == 2)&&(str.at(0) == '*')&&(str.at(1) == '*')) {
             if(codepoint) *codepoint = 0x2a;
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -321,32 +278,25 @@ bool TTFviewer::updateConfig(void)
 {
     bool isInt;
     int temp_Width = ui->frameSize_Width_LineEdit->text().toInt(&isInt);
-    if(!isInt)
-    {
+    if(!isInt) {
         showParaErrMessageBox();
         return false;
     }
     int temp_Height = ui->frameSize_Height_LineEdit->text().toInt(&isInt);
-    if(!isInt)
-    {
+    if(!isInt) {
         showParaErrMessageBox();
         return false;
     }
     QString temp_CodePiontQStr = ui->frameCodePiont_LineEdit->text();
-    if(!isCodePiontValidate(temp_CodePiontQStr))
-    {
+    if(!isCodePiontValidate(temp_CodePiontQStr)) {
         showParaErrMessageBox();
         return false;
     }
 
-    if(((temp_Width % 2) == 0) && ((temp_Height % 2) == 0) && (temp_Width > 0) && (temp_Height > 0))
-    {
-        if(ui->frameSizeType_Combo_RadioButton->isChecked())
-        {
+    if(((temp_Width % 2) == 0) && ((temp_Height % 2) == 0) && (temp_Width > 0) && (temp_Height > 0)) {
+        if(ui->frameSizeType_Combo_RadioButton->isChecked()) {
             TTFviewerConfigFile->config_dict.frameSizeType = ui->frameSizeType_ComboBox->currentText();
-        }
-        else if (ui->frameSizeType_Other_RadioButton->isChecked())
-        {
+        } else if (ui->frameSizeType_Other_RadioButton->isChecked()) {
             TTFviewerConfigFile->config_dict.frameSizeType = ui->frameSizeType_Other_RadioButton->text();
         }
         TTFviewerConfigFile->config_dict.TTFFormat = ui->TTFFormat_ComboBox->currentText();
@@ -355,9 +305,7 @@ bool TTFviewer::updateConfig(void)
         TTFviewerConfigFile->config_dict.frameCodePiont = ui->frameCodePiont_LineEdit->text();
 
         return true;
-    }
-    else
-    {
+    } else {
         QMessageBox::critical(this, "Error", "frameSize invalid!!", QMessageBox::Ok);
         return false;
     }
@@ -365,12 +313,10 @@ bool TTFviewer::updateConfig(void)
 
 bool TTFviewer::imgView(QStringList openfile_list)
 {
-    if (openfile_list.empty())
-    {
+    if (openfile_list.empty()) {
         return false;
     }
-    if(imgViewer != nullptr)
-    {
+    if(imgViewer != nullptr) {
         delete imgViewer;
         imgViewer = nullptr;
     }
@@ -396,20 +342,16 @@ bool TTFviewer::imgView(QStringList openfile_list)
                            frameCodePiont
                            );
     #endif
-    if(!isSuccess)
-    {
+    if(!isSuccess) {
         QMessageBox::critical(this, "Error", "unsupport TTFFormat!!", QMessageBox::Ok);
         this->show();
         return false;
     }
     float fframeSize_Width = (float)frameSize_Width;
     float fframeSize_Height = (float)frameSize_Height;
-    if(frameSize_Width > frameSize_Height)
-    {
+    if(frameSize_Width > frameSize_Height) {
         imgViewer->resize(800, fframeSize_Height/fframeSize_Width*800.0);
-    }
-    else
-    {
+    } else {
         imgViewer->resize(fframeSize_Width/fframeSize_Height*400.0, 400);
     }
     QRect screen = QGuiApplication::screenAt(this->mapToGlobal({this->width()/2,0}))->geometry();
@@ -421,19 +363,16 @@ bool TTFviewer::imgView(QStringList openfile_list)
     return true;
 }
 
-void TTFviewer::openFile()
-{
-    if(updateConfig())
-    {
+void TTFviewer::openFile() {
+    if(updateConfig()) {
         QString openDir = "";
         QFileInfo lastPath(TTFviewerConfigFile->config_dict.lastPath);
-        if(lastPath.isDir())
-        {
+        if(lastPath.isDir()) {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
-        QStringList openfile_list = QFileDialog::getOpenFileNames(this, "选择文件", openDir, "TTF files(*.ttf *.data *.raw)");
-        if(openfile_list.size() != 0)
-        {
+        QStringList openfile_list = QFileDialog::getOpenFileNames(
+                            this, "选择文件", openDir, "TTF files(*.ttf *.data *.raw)");
+        if(openfile_list.size() != 0) {
             QFileInfo file(openfile_list[0]);
             TTFviewerConfigFile->config_dict.lastPath = file.absolutePath();
             imgView(openfile_list);
@@ -441,30 +380,24 @@ void TTFviewer::openFile()
     }
 }
 
-void TTFviewer::openFolder()
-{
-    if(updateConfig())
-    {
+void TTFviewer::openFolder() {
+    if(updateConfig()) {
         QString openDir = "";
         QFileInfo lastPath(TTFviewerConfigFile->config_dict.lastPath);
-        if(lastPath.isDir())
-        {
+        if(lastPath.isDir()) {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
         QString openfolder_name = QFileDialog::getExistingDirectory(this, "选择文件夹", openDir);
-        if (!openfolder_name.isEmpty())
-        {
+        if (!openfolder_name.isEmpty()) {
             TTFviewerConfigFile->config_dict.lastPath = openfolder_name;
             QDir dir(openfolder_name);
             QStringList nameFilters = {"*.ttf","*.data","*.raw"};
             QStringList openfilename_list = dir.entryList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
             QStringList openfile_list;
-            foreach (QString file_name, openfilename_list)
-            {
+            foreach (QString file_name, openfilename_list) {
                 openfile_list.append(QDir::toNativeSeparators(openfolder_name + '/' +file_name));
             }
-            if(openfile_list.size() != 0)
-            {
+            if(openfile_list.size() != 0) {
                 imgView(openfile_list);
             }
         }
@@ -490,21 +423,24 @@ void TTFviewer::about()
 
 void TTFviewer::help()
 {
-    QMessageBox::question(this, "Help", "1.主界面选择数据参数。\n2.点击打开文件或文件夹将进行图像数据解析并显示图像。\n3.图像显示界面中使用滚轮放大缩小图像，使用左键可拖动图像，双击左键保存图像为svg格式，单击右键复位图像大小和位置，单击中键显示图像原始大小。", QMessageBox::Ok);
+    QMessageBox::question(this, "Help", 
+        "1.主界面选择数据参数。\n"
+        "2.点击打开文件或文件夹将进行图像数据解析并显示图像。\n"
+        "3.图像显示界面中使用滚轮放大缩小图像，使用左键可拖动图像，"
+          "双击左键保存图像为svg格式，单击右键复位图像大小和位置，"
+          "单击中键显示图像原始大小。", QMessageBox::Ok);
 }
 
 void TTFviewer::closeEvent(QCloseEvent *event)
 {
-    if(TTFviewerConfigFile != nullptr)
-    {
+    if(TTFviewerConfigFile != nullptr) {
         delete TTFviewerConfigFile;
         TTFviewerConfigFile = nullptr;
     }
     event->accept();
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     if(argc == 2) {
         if((!strncmp(argv[1],"--version",9)) | (!strncmp(argv[1],"-v",2)) ) {
             std::cout << "TTFviewer " << VERSION.toStdString() << "\n" << GIT_TAG.toStdString() << "\n";

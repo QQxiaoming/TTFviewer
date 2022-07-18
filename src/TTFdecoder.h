@@ -26,9 +26,7 @@ public:
 
 typedef QList<SvgInfo> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
 
-
-class TTF2RGB
-{
+class TTF2RGB {
 public:
     static QList<SvgInfo> ttf(QString ttffilename,int W, int H, int codepoint);
     static QList<SvgInfo> ttf_verbose(QString ttffilename,int W, int H, int codepoint);

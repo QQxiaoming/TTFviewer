@@ -9,8 +9,7 @@
 
 #include <QString>
 
-typedef struct
-{
+typedef struct {
     QString lastPath;
     QString frameSizeType;
     QString TTFFormat;
@@ -19,8 +18,7 @@ typedef struct
     QString frameCodePiont;
 }config_dict_t;
 
-class ConfigFile
-{
+class ConfigFile {
 public:
     ConfigFile(QString path);
     ~ConfigFile();
