@@ -265,10 +265,10 @@ void ImgViewer::wheelEvent(QWheelEvent *event) {
                 currentImg2scaledImg(this->currentImg,this->scaled_img,
                     QSize(this->scaled_img.width() + setpsize_x,this->scaled_img.height() + setpsize_y));
 
-                float new_w = event->x() - 
-                    (this->scaled_img.width() * (event->x() - this->point.x())) / (this->scaled_img.width() - setpsize_x);
-                float new_h = event->y() - 
-                    (this->scaled_img.height() * (event->y() - this->point.y())) / (this->scaled_img.height() - setpsize_y);
+                float new_w = event->position().x() -
+                    (this->scaled_img.width() * (event->position().x() - this->point.x())) / (this->scaled_img.width() - setpsize_x);
+                float new_h = event->position().y() -
+                    (this->scaled_img.height() * (event->position().y() - this->point.y())) / (this->scaled_img.height() - setpsize_y);
                 this->point = QPoint(new_w, new_h);
                 this->repaint();
             }
@@ -281,10 +281,10 @@ void ImgViewer::wheelEvent(QWheelEvent *event) {
                 currentImg2scaledImg(this->currentImg,this->scaled_img,
                     QSize(this->scaled_img.width() - setpsize_x,this->scaled_img.height() - setpsize_y));
 
-                float new_w = event->x() - 
-                    (this->scaled_img.width() * (event->x() - this->point.x())) / (this->scaled_img.width() + setpsize_x);
-                float new_h = event->y() - 
-                    (this->scaled_img.height() * (event->y() - this->point.y())) / (this->scaled_img.height() + setpsize_y);
+                float new_w = event->position().x() -
+                    (this->scaled_img.width() * (event->position().x() - this->point.x())) / (this->scaled_img.width() + setpsize_x);
+                float new_h = event->position().y() -
+                    (this->scaled_img.height() * (event->position().y() - this->point.y())) / (this->scaled_img.height() + setpsize_y);
                 this->point = QPoint(new_w, new_h);
                 this->repaint();
             }

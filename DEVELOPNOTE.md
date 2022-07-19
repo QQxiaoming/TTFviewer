@@ -19,8 +19,8 @@ FREETPE2_DIR=D:\ttfviewer\depend\freetype
 ```bat
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: 定义Qt目录
-set "QT_DIR=C:/Qt/Qt5.12.8/5.12.8/mingw73_32/bin"
-set "QT_TOOLS_DIR=C:/Qt/Qt5.12.8/Tools/mingw730_32/bin"
+set "QT_DIR=C:/Qt/Qt6.2.0/6.2.0/mingw81_32/bin"
+set "QT_TOOLS_DIR=C:/Qt/Qt6.2.0/Tools/mingw810_32/bin"
 :: 定义Inno Setup目录
 set "INNO_SETUP_DIR=C:/Program Files (x86)/Inno Setup 6"
 :: 定义版本号
@@ -32,7 +32,7 @@ set "TTFVIEWER_VERSION=0.1.0"
 
 ## linux
 
-- 安装Qt、patchelf工具，编译freetype lib以及linuxdeployqt工具(tools中已编译好适用于ubuntu18.04的linuxdeployqt工具)
+- 安装Qt、patchelf工具，编译freetype lib以及linuxdeployqt工具(tools中已编译好适用于ubuntu20.04的linuxdeployqt工具)
 
 - 修改partform_unix.pri文件以下内容
 
@@ -48,7 +48,7 @@ FREETPE2_DIR=/home/qqm/Desktop/ttfviewer/depend/freetype
 ```sh
 ###############################################################################
 # 定义Qt目录
-QT_DIR=/opt/Qt5.12.2/5.12.2/gcc_64
+QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
 ###############################################################################
 ```
 
@@ -72,7 +72,7 @@ FREETPE2_DIR=/home/qqm/Desktop/ttfviewer/depend/freetype
 ```sh
 ###############################################################################
 # 定义Qt目录
-QT_DIR=/opt/Qt5.12.2/5.12.2/gcc_64
+QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
 ###############################################################################
 ```
 

@@ -13,9 +13,9 @@
 
 class SvgInfo {
 public:
-    bool operator==(const SvgInfo &l) 
+    bool operator==(const SvgInfo &l) const
     {
-        if((l.src == src)&&(l.W == W)&&(l.H == H)&&(l.codepoint == codepoint)) return true;
+        if((l.src == this->src)&&(l.W == this->W)&&(l.H == this->H)&&(l.codepoint == this->codepoint)) return true;
         else return false;
     }
     QString *src;
