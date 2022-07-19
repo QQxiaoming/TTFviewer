@@ -8,7 +8,7 @@
 #define MyAppOutputName "TTFviewer_setup"
 
 [Setup]
-AppId={{4368AAE0-A354-4127-94A9-0C38727B1DCC}
+AppId={{4368AAE0-A354-4127-94A9-0C38727B1DC5}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
