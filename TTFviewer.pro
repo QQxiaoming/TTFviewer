@@ -84,9 +84,11 @@ unix:!macx:{
     QMAKE_RPATHDIR=$ORIGIN
     QMAKE_LFLAGS += -no-pie
 
-    INCLUDEPATH += -I /usr/include/freetype2
-    DEPENDPATH +=/usr/include/freetype2
-    LIBS += -L /usr/lib/x86_64-linux-gnu -lfreetype
+    INCLUDEPATH += -I $${FREETPE2_DIR}/include
+    INCLUDEPATH += -I $${FREETPE2_DIR}/include/freetype2
+    DEPENDPATH +=$${FREETPE2_DIR}/include
+    DEPENDPATH +=$${FREETPE2_DIR}/include/freetype2
+    LIBS += -L $${FREETPE2_DIR}/lib/ -lfreetype
     
     git_tag.commands = $$quote("cd $$PWD && git describe --always --long --dirty --abbrev=10 --tags | awk \'{print \"\\\"\"\$$0\"\\\"\"}\' > git_tag.inc")
 }
