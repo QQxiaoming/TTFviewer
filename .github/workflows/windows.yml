@@ -52,7 +52,7 @@ jobs:
           git describe --always --long --abbrev=10 --tags | ./tools/awk/awk.exe '{print \"\\\"\"$0\"\\\"\"}'  > git_tag.inc
           ./tools/sed/sed.exe -i "s/git_tag.inc/git_tag.ci.inc/g" TTFviewer.pro
           ./tools/sed/sed.exe -i "s/QT_DIR=C:\/Qt\/Qt5.12.8\/5.12.8\/mingw73_32\/bin/QT_DIR=%Qt5_Dir%/g" ./build_setup.bat
-          ./tools/sed/sed.exe -i "s/QT_TOOLS_DIR=C:\/Qt\/Qt5.12.8\/Tools\/mingw730_32\/bin/QT_TOOLS_DIR=C:\/ProgramData\/Chocolatey\/lib\/mingw\/tools\/install\/mingw64\/x86_64-w64-mingw32\/bin/g" ./build_setup.bat
+          ./tools/sed/sed.exe -i "s/QT_TOOLS_DIR=C:\/Qt\/Qt5.12.8\/Tools\/mingw730_32\/bin/QT_TOOLS_DIR=C:\/ProgramData\/Chocolatey\/lib\/mingw\/tools\/install\/mingw64\/bin/g" ./build_setup.bat
           ./tools/sed/sed.exe -i "s/FREETPE2_DIR=D:\\ttfviewer\\depend\\freetype/FREETPE2_DIR=D:\\freetype/g" ./partform_win32.pri
           ./build_setup.bat
 
