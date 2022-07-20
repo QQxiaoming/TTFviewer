@@ -69,3 +69,9 @@ ttf\ttf_verbose
 ## 编译说明
 
 　> [编译说明](./DEVELOPNOTE.md)
+
+## 贡献
+
+如果您对本项目有建议或想法，欢迎在GitHub或Gitee上提交issue和pull requests。
+
+目前项目即将转移到基于Qt6开发，目前分支dev/qt6代码已完全完成迁移，也许会在下一个Qt6的LTS版本完成main分支的替换。

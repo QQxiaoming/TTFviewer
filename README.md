@@ -69,3 +69,9 @@ ttf\ttf_verbose
 ## Build
 
 　> [Build documentation](./DEVELOPNOTE.md)
+
+## Contributing
+
+If you have suggestions or ideas for this project, please submit issues and pull requests on GitHub or Gitee.
+
+At present, the project will be transferred to the development based on Qt6. The current branch dev/qt6 code has been completely migrated, and the replacement of the main branch may be completed in the next LTS version of Qt6.
