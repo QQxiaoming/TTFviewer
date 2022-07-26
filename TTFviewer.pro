@@ -95,6 +95,7 @@ unix:!macx:{
 
 macx:{
     QMAKE_RPATHDIR=$ORIGIN
+    ICON = "img\ico.icns"
     
     INCLUDEPATH += -I $${FREETPE2_DIR}/include
     INCLUDEPATH += -I $${FREETPE2_DIR}/include/freetype2
