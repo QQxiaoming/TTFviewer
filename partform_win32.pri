@@ -2,5 +2,5 @@
 # 定义freetype2 lib路径
 FREETPE2_DIR=D:\ttfviewer\depend\freetype
 # 定义版本号路径
-TTFVIEWER_VERSION=0.1.1
+TTFVIEWER_VERSION=0.2.0
 ###############################################################################
