@@ -28,18 +28,20 @@ jobs:
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
+        with:
+          version: '6.2.0'
 
       - name: Install prerequisites
         run: |
           sudo apt update
-          sudo apt install -y make gcc patchelf
+          sudo apt install -y make gcc patchelf chrpath qt5-default
 
       - name: Build all
         run: |
           git fetch --tags --force
           git describe --always --long --dirty --abbrev=10 --tags | awk '{print "\""$0"\""}' > git_tag.inc
           sed -i 's/git_tag.inc/git_tag.ci.inc/g' TTFviewer.pro
-          sed -i 's/QT_DIR=\/opt/QT_DIR=$(cd "$(dirname "$0")";pwd)/g' build_deb.sh
+          sed -i 's/QT_DIR=\/opt\/Qt6.2.0\/6.2.0\/gcc_64/QT_DIR=$(cd "$(dirname "$0")";pwd)\/..\/Qt\/6.2.0\/gcc_64/g' build_deb.sh
           sed -i 's/\/home\/qqm\/Desktop\/ttfviewer\/depend\/freetype/\/usr\/local\/ttfviewer/g' partform_unix.pri
           cd depend
           sudo ./build.sh
@@ -50,46 +52,6 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: TTFviewer_Ubuntu2004
-          path: |
-            ./dpkg/*.deb
-
-      - name: Run tests
-        run: |
-          if ls ./dpkg | grep ".deb" ; then echo "Pass"; else echo "Failed" && exit 1; fi;
-          timeout --foreground -s SIGKILL 20s ./dpkg/TTFviewer_Linux_*/opt/TTFviewer/TTFviewer --version > >(tee run.log) || {
-            if cat run.log | grep "TTFviewer" ; then echo "Pass" && exit 0; else echo "Failed" && exit 1; fi;
-          }
-
-  ubuntu-1804:
-    runs-on: ubuntu-18.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
-
-      - name: Install prerequisites
-        run: |
-          sudo apt update
-          sudo apt install -y make gcc patchelf
-
-      - name: Build all
-        run: |
-          git fetch --tags --force
-          git describe --always --long --dirty --abbrev=10 --tags | awk '{print "\""$0"\""}' > git_tag.inc
-          sed -i 's/git_tag.inc/git_tag.ci.inc/g' TTFviewer.pro
-          sed -i 's/QT_DIR=\/opt/QT_DIR=$(cd "$(dirname "$0")";pwd)/g' build_deb.sh
-          sed -i 's/\/home\/qqm\/Desktop\/ttfviewer\/depend\/freetype/\/usr\/local\/ttfviewer/g' partform_unix.pri
-          cd depend
-          sudo ./build.sh
-          cd -
-          ./build_deb.sh
-
-      - name: Upload build asserts
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: TTFviewer_Ubuntu1804
           path: |
             ./dpkg/*.deb
 

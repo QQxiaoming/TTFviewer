@@ -2,11 +2,11 @@
 
 ###############################################################################
 # 定义Qt目录
-QT_DIR=/opt/Qt5.12.8/5.12.8/gcc_64
+QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
 
 # 定义版本号
 TTFVIEWER_MAJARVERSION="0"
-TTFVIEWER_SUBVERSION="1"
+TTFVIEWER_SUBVERSION="2"
 TTFVIEWER_REVISION="1"
 ###############################################################################
 
@@ -28,13 +28,20 @@ rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64
 rm -f ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64.deb
 # 构建打包目录
 cp -r ./dpkg/TTFviewer ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64
+# 使用linuxdeployqt拷贝依赖so库到打包目录
+export QMAKE=$QT_DIR/bin/qmake
+./tools/linuxdeploy-x86_64.AppImage --executable=./build_release/out/TTFviewer --appdir=./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt --plugin=qt
+rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/apprun-hooks
+mv ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/usr ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer
+mv ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin/TTFviewer ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer
+mv ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin/qt.conf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/qt.conf
+rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin
+sed -i "s/Prefix = ..\//Prefix = .\//g" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/qt.conf
+chrpath -r "\$ORIGIN/./lib" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer
+rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/share
+cp ./img/ico.png ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer.png
 mkdir -p ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer
 cp -r ./test ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/test
-cp ./build_release/out/TTFviewer ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer
-# 使用linuxdeployqt拷贝依赖so库到打包目录
-./tools/linuxdeployqt ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer -appimage
-rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/doc ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/default.png ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/AppRun ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/default.desktop
-cp ./img/ico.png ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer.png
 # 配置打包信息
 sed -i "s/#VERSION#/$TTFVIEWER_MAJARVERSION.$TTFVIEWER_SUBVERSION$TTFVIEWER_REVISION/g" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/DEBIAN/control
 SIZE=$(du -sh -B 1024 ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64 | sed "s/.\///g")
