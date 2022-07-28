@@ -37,6 +37,7 @@ mv ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin/TTFviewe
 mv ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin/qt.conf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/qt.conf
 rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/bin
 sed -i "s/Prefix = ..\//Prefix = .\//g" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/qt.conf
+chrpath -r "\$ORIGIN/./lib" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer
 rm -rf ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/share
 cp ./img/ico.png ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/TTFviewer.png
 mkdir -p ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer
