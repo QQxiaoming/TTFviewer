@@ -18,8 +18,8 @@
 #include "TTFviewer.h"
 #include "ui_UI_TTFviewer.h"
 
-const QString VERSION = APP_VERSION;
-const QString GIT_TAG =
+const QString TTFviewer::VERSION = APP_VERSION;
+const QString TTFviewer::GIT_TAG =
 #include <git_tag.inc>
 ;
 
@@ -324,7 +324,7 @@ bool TTFviewer::imgView(QStringList openfile_list)
     imgViewer = new ImgViewer(nullptr,this);
     int frameSize_Width = ui->frameSize_Width_LineEdit->text().toInt();
     int frameSize_Height = ui->frameSize_Height_LineEdit->text().toInt();
-    int frameCodePiont;
+    int frameCodePiont = -1;
     isCodePiontValidate(ui->frameCodePiont_LineEdit->text(),&frameCodePiont);
     #if 1
     // 多线程
@@ -450,7 +450,7 @@ void TTFviewer::closeEvent(QCloseEvent *event)
 int main(int argc, char *argv[]) {
     if(argc == 2) {
         if((!strncmp(argv[1],"--version",9)) | (!strncmp(argv[1],"-v",2)) ) {
-            std::cout << "TTFviewer " << VERSION.toStdString() << "\n" << GIT_TAG.toStdString() << "\n";
+            std::cout << "TTFviewer " << TTFviewer::VERSION.toStdString() << "\n" << TTFviewer::GIT_TAG.toStdString() << "\n";
             return 0;
         }
     }

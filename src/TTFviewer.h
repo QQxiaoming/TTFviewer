@@ -22,6 +22,8 @@ class TTFviewer : public QMainWindow {
 public:
     explicit TTFviewer(QWidget *parent = nullptr);
     ~TTFviewer();
+    static const QString VERSION;
+    static const QString GIT_TAG;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -52,7 +54,6 @@ private:
     ConfigFile *TTFviewerConfigFile;
     ImgViewer *imgViewer;
     static const QList<QPair<QString, QStringList>> frameSizeTypeDict;
-    static const QList<QPair<QString, QList<uint64_t>>> TTFFormat_list;
 };
 
 #endif // TTFviewer_H
