@@ -23,10 +23,11 @@ rm -rf .qmake.stash Makefile
 qmake -makefile
 make
 cp -R ./test ./build_release/out/TTFviewer.app/contents/resources/test
+cp -R ./tools/create-dmg/* ./build_release/out/
 cd ./build_release/out
 # 打包
 macdeployqt TTFviewer.app
 otool -L ./TTFviewer.app/Contents/MacOS/TTFviewer
-macdeployqt TTFviewer.app -dmg -verbose=2
+./buid-dmg.sh TTFviewer
 echo build success!
 ###############################################################################
