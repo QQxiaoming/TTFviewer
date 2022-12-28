@@ -11,25 +11,23 @@
 #include <QList>
 #include <QMap>
 
-class SvgInfo {
-public:
-    bool operator==(const SvgInfo &l) const
-    {
-        if((l.src == this->src)&&(l.W == this->W)&&(l.H == this->H)&&(l.codepoint == this->codepoint)) return true;
-        else return false;
-    }
-    QString *src;
-    int W;
-    int H;
-    int codepoint;
-};
 
-typedef QList<SvgInfo> (* ttfdecoder_t)(QString ttffilename,int W, int H, int codepoint);
-
-class TTF2RGB {
+class ImageDecoder {
 public:
-    static QList<SvgInfo> ttf(QString ttffilename,int W, int H, int codepoint);
-    static QList<SvgInfo> ttf_verbose(QString ttffilename,int W, int H, int codepoint);
+    class SvgInfo {
+    public:
+        bool operator==(const SvgInfo &l) const {
+            if((l.src == this->src)&&(l.W == this->W)&&(l.H == this->H)&&(l.codepoint == this->codepoint)) return true;
+            else return false;
+        }
+        QString *src;
+        int W;
+        int H;
+        int codepoint;
+    };
+    typedef QList<SvgInfo> (* ttfdecoder_t)(const QString &ttffilename,int W, int H, int codepoint);
+    static QList<SvgInfo> ttf(const QString &ttffilename,int W, int H, int codepoint);
+    static QList<SvgInfo> ttf_verbose(const QString &ttffilename,int W, int H, int codepoint);
     static QMap<QString, ttfdecoder_t> ttfdecoder_map;
 private:
     static std::string ttf_glyph_out(void *glyph, bool verbose);

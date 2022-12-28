@@ -17,20 +17,20 @@
 #include "TTFdecoder.h"
 #include "font_to_svg.hpp"
 
-QMap<QString, ttfdecoder_t> TTF2RGB::ttfdecoder_map = {
-    {"ttf",            TTF2RGB::ttf},
-    {"ttf_verbose",    TTF2RGB::ttf_verbose},
+QMap<QString, ImageDecoder::ttfdecoder_t> ImageDecoder::ttfdecoder_map = {
+    {"ttf",            ImageDecoder::ttf},
+    {"ttf_verbose",    ImageDecoder::ttf_verbose},
 };
 
-QList<SvgInfo> TTF2RGB::ttf(QString ttffilename,int W, int H, int codepoint) {
+QList<ImageDecoder::SvgInfo> ImageDecoder::ttf(const QString &ttffilename,int W, int H, int codepoint) {
     return ttf_decode(ttffilename,W,H,codepoint,false);
 }
 
-QList<SvgInfo> TTF2RGB::ttf_verbose(QString ttffilename,int W, int H, int codepoint) {
+QList<ImageDecoder::SvgInfo> ImageDecoder::ttf_verbose(const QString &ttffilename,int W, int H, int codepoint) {
     return ttf_decode(ttffilename,W,H,codepoint,true);
 }
 
-std::string TTF2RGB::ttf_glyph_out(void *glyph, bool verbose) {
+std::string ImageDecoder::ttf_glyph_out(void *glyph, bool verbose) {
     font2svg::glyph *g = static_cast<font2svg::glyph *>(glyph);
     if(verbose) 
         return g->svgheader()      +
@@ -50,7 +50,7 @@ std::string TTF2RGB::ttf_glyph_out(void *glyph, bool verbose) {
                g->svgfooter();
 }
 
-QList<SvgInfo> TTF2RGB::ttf_decode(QString ttffilename,int W, int H, int codepoint,bool verbose) {
+QList<ImageDecoder::SvgInfo> ImageDecoder::ttf_decode(QString ttffilename,int W, int H, int codepoint,bool verbose) {
     QList<SvgInfo> rgbImglist;
 
     if(codepoint == -1) {

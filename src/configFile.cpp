@@ -10,15 +10,14 @@
 #include <QXmlStreamWriter>
 #include "configFile.h"
 
-ConfigFile::ConfigFile(QString path) {
+ConfigFile::ConfigFile(const QString &path) :
+    configFilePath(path) {
     config_dict.lastPath = "";
     config_dict.frameSizeType = "Other";
     config_dict.TTFFormat = "ttf";
     config_dict.frameSize_Width = "2560";
     config_dict.frameSize_Height = "1920";
     config_dict.frameCodePiont = "*";
-
-    configFilePath = path;
 
     QFileInfo fileInfo(configFilePath);
     if(!fileInfo.isFile()) {

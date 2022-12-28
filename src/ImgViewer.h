@@ -28,7 +28,7 @@ class TTFDecodeThread : public QThread {
 
 public:
     explicit TTFDecodeThread(QWidget *parent = nullptr,
-                             QString ttffilename = nullptr,
+                             const QString &ttffilename = QString(),
                              QString TTFFormat = nullptr,
                              int W = 0, int H = 0, int codepoint = 0);
 
@@ -36,7 +36,7 @@ protected:
     void run();
 
 signals:
-    void finsh_signal(QList<SvgInfo> frame_RGB_list,QString str);
+    void finsh_signal(QList<ImageDecoder::SvgInfo> frame_RGB_list,QString str);
 
 private:
     QWidget *window;
@@ -44,7 +44,7 @@ private:
     int W;
     int H;
     int codepoint;
-    ttfdecoder_t decoder;
+    ImageDecoder::ttfdecoder_t decoder;
 };
 
 class ImgViewer : public QWidget {
@@ -57,7 +57,7 @@ public:
     bool setFileList_multithreading(QStringList filenamelist, QString TTFFormat, int W, int H, int codepoint);
 
 private slots:
-    void reciveimgdata(QList<SvgInfo> img_RGB_list, QString filename);
+    void reciveimgdata(QList<ImageDecoder::SvgInfo> img_RGB_list, QString filename);
     void previousImg();
     void nextImg();
 
@@ -72,20 +72,20 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    void currentImg2scaledImg(SvgInfo &currentImg,QPixmap &QPixmap,const QSize &size);
+    void currentImg2scaledImg(const ImageDecoder::SvgInfo &currentImg,QPixmap &QPixmap,const QSize &size);
     void draw_img(QPainter *painter);
     Ui::ImgViewerWindow *ui;
     QWidget *parentWindow;
     bool left_click;
 
-    QList<QList<SvgInfo>> img_list;
+    QList<QList<ImageDecoder::SvgInfo>> img_list;
     QStringList filelist;
 
     QList<TTFDecodeThread*> decode_thread;
     QList<TTFDecodeThread*> decode_thread_finsh;
 
-    QList<SvgInfo> currentImg_RGB_list;
-    SvgInfo currentImg;
+    QList<ImageDecoder::SvgInfo> currentImg_RGB_list;
+    ImageDecoder::SvgInfo currentImg;
     QPixmap scaled_img;
     QPoint point;
     QPoint startPos;

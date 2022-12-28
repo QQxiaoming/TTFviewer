@@ -9,19 +9,19 @@
 
 #include <QString>
 
-typedef struct {
-    QString lastPath;
-    QString frameSizeType;
-    QString TTFFormat;
-    QString frameSize_Width;
-    QString frameSize_Height;
-    QString frameCodePiont;
-}config_dict_t;
-
 class ConfigFile {
 public:
-    ConfigFile(QString path);
+    ConfigFile(const QString &path = QString());
     ~ConfigFile();
+
+    typedef struct {
+        QString lastPath;
+        QString frameSizeType;
+        QString TTFFormat;
+        QString frameSize_Width;
+        QString frameSize_Height;
+        QString frameCodePiont;
+    }config_dict_t;
     config_dict_t config_dict;
 
 private:

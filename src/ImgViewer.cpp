@@ -21,7 +21,7 @@
 #include "TTFdecoder.h"
 #include "ui_UI_ImgViewer.h"
 
-TTFDecodeThread::TTFDecodeThread(QWidget *parent,QString ttffilename,QString TTFFormat,
+TTFDecodeThread::TTFDecodeThread(QWidget *parent,const QString &ttffilename,QString TTFFormat,
                                  int W, int H, int codepoint) :
     QThread(parent) {
     this->window = parent;
@@ -30,11 +30,11 @@ TTFDecodeThread::TTFDecodeThread(QWidget *parent,QString ttffilename,QString TTF
     this->H = H;
     this->codepoint = codepoint;
     // 获取该格式的解码函数
-    this->decoder = TTF2RGB::ttfdecoder_map.find(TTFFormat).value();
+    this->decoder = ImageDecoder::ttfdecoder_map.find(TTFFormat).value();
 }
 
 void TTFDecodeThread::run() {
-    QList<SvgInfo> frame_RGB_list;
+    QList<ImageDecoder::SvgInfo> frame_RGB_list;
     if(this->decoder == nullptr) {
         // 未能成功获取则返回无法解码
         emit finsh_signal(frame_RGB_list,nullptr);
@@ -54,7 +54,7 @@ ImgViewer::ImgViewer(QWidget *parent,QWidget *parentWindow) :
     QWidget(parent),
     ui(new Ui::ImgViewerWindow) {
     ui->setupUi(this);
-    qRegisterMetaType<QList<SvgInfo>>("QList<SvgInfo>");
+    qRegisterMetaType<QList<ImageDecoder::SvgInfo>>("QList<SvgInfo>");
     this->parentWindow = parentWindow;
     setWindowTitle("loading file, please wait ....");
     ui->left_PushButton->setFlat(true);
@@ -70,7 +70,7 @@ ImgViewer::~ImgViewer() {
 
 bool ImgViewer::setFileList(QStringList filenamelist,QString TTFFormat, int W, int H, int codepoint) {
     // 获取该格式的解码函数
-    ttfdecoder_t decoder = TTF2RGB::ttfdecoder_map.find(TTFFormat).value();
+    ImageDecoder::ttfdecoder_t decoder = ImageDecoder::ttfdecoder_map.find(TTFFormat).value();
     if(decoder == nullptr) {
         // 未能成功获取则返回无法解码
         return false;
@@ -79,7 +79,7 @@ bool ImgViewer::setFileList(QStringList filenamelist,QString TTFFormat, int W, i
         ui->imgViewer->setText("");
         // 遍历文件列表
         foreach( QString filename, filenamelist) {
-            QList<SvgInfo> frame_RGB_list;
+            QList<ImageDecoder::SvgInfo> frame_RGB_list;
 
             // 使用获取的解码函数进行解码得到RGB的原始帧列表
             frame_RGB_list = decoder(filename, W, H, codepoint);
@@ -103,7 +103,7 @@ bool ImgViewer::setFileList(QStringList filenamelist,QString TTFFormat, int W, i
     }
 }
 
-void ImgViewer::reciveimgdata(QList<SvgInfo> img_RGB_list,QString filename) {
+void ImgViewer::reciveimgdata(QList<ImageDecoder::SvgInfo> img_RGB_list,QString filename) {
     if (!img_RGB_list.empty()) {
         // img_RGB_list以及文件名存入列表
         this->img_list.insert(this->img_list.end(),img_RGB_list);
@@ -134,7 +134,7 @@ void ImgViewer::reciveimgdata(QList<SvgInfo> img_RGB_list,QString filename) {
 
 bool ImgViewer::setFileList_multithreading(QStringList filenamelist,QString TTFFormat, int W, int H, int codepoint) {
     // 获取该格式的解码函数
-    ttfdecoder_t decoder = TTF2RGB::ttfdecoder_map.find(TTFFormat).value();
+    ImageDecoder::ttfdecoder_t decoder = ImageDecoder::ttfdecoder_map.find(TTFFormat).value();
     if(decoder == nullptr) {
         // 未能成功获取则返回无法解码
         return false;
@@ -153,9 +153,9 @@ void ImgViewer::closeEvent(QCloseEvent *event) {
     this->parentWindow->show();
     event->accept();
     if(!this->img_list.empty()) {
-        foreach(QList<SvgInfo> list,this->img_list) {
+        foreach(QList<ImageDecoder::SvgInfo> list,this->img_list) {
             if(!list.empty()) {
-                foreach(SvgInfo img,list) {
+                foreach(ImageDecoder::SvgInfo img,list) {
                     delete img.src;
                 }
             }
@@ -167,7 +167,7 @@ void ImgViewer::draw_img(QPainter *painter) {
     painter->drawPixmap(this->point, this->scaled_img);
 }
 
-void ImgViewer::currentImg2scaledImg(SvgInfo &currentImg,QPixmap &scaledImg, const QSize &size) {
+void ImgViewer::currentImg2scaledImg(const ImageDecoder::SvgInfo &currentImg,QPixmap &scaledImg, const QSize &size) {
     QString *svgsrc = currentImg.src;
     QXmlStreamReader svgXmlStreamReader(*svgsrc);
     QSvgRenderer svgRender;
@@ -186,7 +186,7 @@ void ImgViewer::paintEvent(QPaintEvent *event) {
         draw_img(&painter);
         painter.end();
     }
-    (void)event;
+    Q_UNUSED(event);
 }
 
 void ImgViewer::mouseMoveEvent(QMouseEvent *event) {
@@ -198,7 +198,7 @@ void ImgViewer::mouseMoveEvent(QMouseEvent *event) {
             this->repaint();
         }
     }
-    (void)event;
+    Q_UNUSED(event);
 }
 
 void ImgViewer::mousePressEvent(QMouseEvent *event) {
@@ -230,7 +230,7 @@ void ImgViewer::mouseDoubleClickEvent(QMouseEvent *event) {
     if (!this->img_list.empty()) {
         if( event->button() == Qt::LeftButton) {
             int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-            QList<SvgInfo> img_RGB_list = this->img_list[list_index];
+            QList<ImageDecoder::SvgInfo> img_RGB_list = this->img_list[list_index];
             int img_index = img_RGB_list.indexOf(this->currentImg);
             QString savefile_name = QFileDialog::getSaveFileName( this, "保存文件", 
                 this->filelist[list_index].replace(".ttf","-") + 
@@ -305,7 +305,7 @@ void ImgViewer::previousImg() {
     if (!this->img_list.empty()) {
         //得到当前显示的文件序号
         int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-        QList<SvgInfo> img_RGB_list = this->img_list[list_index];
+        QList<ImageDecoder::SvgInfo> img_RGB_list = this->img_list[list_index];
         //得到当前显示的图像是文件的帧序号
         int img_index = img_RGB_list.indexOf(this->currentImg);
 
@@ -340,7 +340,7 @@ void ImgViewer::nextImg() {
     if (!this->img_list.empty()) {
         //得到当前显示的文件序号
         int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
-        QList<SvgInfo> img_RGB_list = this->img_list[list_index];
+        QList<ImageDecoder::SvgInfo> img_RGB_list = this->img_list[list_index];
         //得到当前显示的图像是文件的帧序号
         int img_index = img_RGB_list.indexOf(this->currentImg);
 
