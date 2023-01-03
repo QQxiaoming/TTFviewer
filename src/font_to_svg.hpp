@@ -52,8 +52,6 @@ endorsement.
 
 namespace font2svg {
 
-std::stringstream debug;
-
 #if 0
 #define DEBUG_OUT std::cout
 #else
@@ -84,6 +82,7 @@ public:
 
     ttf_file( std::string fname )
     {
+        std::stringstream debug;
         filename = fname;
         error = FT_Init_FreeType( &library );
         debug << "Init error code: " << error;
@@ -93,6 +92,7 @@ public:
         debug << "\nFace load error code: " << error;
         debug << "\nfont filename: " << filename;
         if (error) {
+            DEBUG_OUT << debug.str();
             std::cerr << "problem loading file " << filename << "\n";
             exit(1);
         }
@@ -100,16 +100,19 @@ public:
         debug << "\nStyle Name: " << face->style_name;
         debug << "\nNumber of faces: " << face->num_faces;
         debug << "\nNumber of glyphs: " << face->num_glyphs;
+        DEBUG_OUT << debug.str();
     }
 
     void free()
     {
+        std::stringstream debug;
         debug << "\n<!--";
         error = FT_Done_Face( face );
         debug << "\nFree face. error code: " << error;
         error = FT_Done_FreeType( library );
         debug << "\nFree library. error code: " << error;
         debug << "\n-->\n";
+        DEBUG_OUT << debug.str();
     }
 };
 
@@ -240,40 +243,40 @@ public:
     std::stringstream debug, tmp;
     int bbwidth, bbheight;
 
-    glyph( ttf_file &f, std::string unicode_str )
+    glyph( ttf_file &f, std::string unicode_str, bool force )
     {
         file = f;
-        init( unicode_str );
+        init( unicode_str, force );
     }
 
-    glyph( const char * filename, std::string unicode_str )
+    glyph( const char * filename, std::string unicode_str, bool force )
     {
         this->file = ttf_file( std::string(filename) );
-        init( unicode_str );
+        init( unicode_str, force );
     }
 
-    glyph( const char * filename, const char * unicode_c_str )
+    glyph( const char * filename, const char * unicode_c_str, bool force )
     {
         this->file = ttf_file( std::string(filename) );
-        init( std::string(unicode_c_str) );
+        init( std::string(unicode_c_str), force );
     }
 
-    glyph( ttf_file &f, int unicode )
+    glyph( ttf_file &f, int unicode, bool force )
     {
         file = f;
-        init( unicode );
+        init( unicode, force );
     }
 
-    glyph( const char * filename, int unicode )
+    glyph( const char * filename, int unicode, bool force )
     {
         this->file = ttf_file( std::string(filename) );
-        init( unicode );
+        init( unicode, force );
     }
 
-    glyph( std::string fname, int unicode )
+    glyph( std::string fname, int unicode, bool force )
     {
         this->file = ttf_file( fname );
-        init( unicode );
+        init( unicode, force );
     }
 
     void free()
@@ -281,19 +284,20 @@ public:
         file.free();
     }
 
-    void init( std::string unicode_s )
+    void init( std::string unicode_s, bool force )
     {
         int unicode = strtol( unicode_s.c_str() , NULL, 0 );
         debug << "<!--\nUnicode requested: " << unicode_s;
-        init(unicode);
+        init(unicode,force);
     }
 
-    void init( int unicode )
+    void init( int unicode, bool force )
     {
         face = file.face;
         codepoint = unicode;
         // Load the Glyph into the face's Glyph Slot + print details
         glyph_index = FT_Get_Char_Index( face, codepoint );
+        if(glyph_index == 0 && unicode != 0 && (!force)) return;
         debug << " (decimal: " << codepoint << " hex: 0x"
             << std::hex << codepoint << std::dec << ")";
         debug << "\nGlyph index for unicode: " << glyph_index;

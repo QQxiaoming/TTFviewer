@@ -32,7 +32,7 @@ QList<ImageDecoder::SvgInfo> ImageDecoder::ttf_verbose(const QString &ttffilenam
 
 std::string ImageDecoder::ttf_glyph_out(void *glyph, bool verbose) {
     font2svg::glyph *g = static_cast<font2svg::glyph *>(glyph);
-    if(verbose) 
+    if(verbose)
         return g->svgheader()      +
                g->svgborder()      +
                g->svgtransform()   +
@@ -43,7 +43,7 @@ std::string ImageDecoder::ttf_glyph_out(void *glyph, bool verbose) {
                g->outline()        +
                g->labelpts()       +
                g->svgfooter();
-    else 
+    else
         return g->svgheader()      +
                g->svgtransform()   +
                g->outline()        +
@@ -56,7 +56,7 @@ QList<ImageDecoder::SvgInfo> ImageDecoder::ttf_decode(QString ttffilename,int W,
     if(codepoint == -1) {
         font2svg::ttf_file tfile(ttffilename.toStdString());
         for(int index = 0;index<=0x10FFFF;index++) {
-            font2svg::glyph g(tfile, index);
+            font2svg::glyph g(tfile, index, false);
             if(g.glyph_index != 0) {
                 SvgInfo info;
                 info.src = new QString(QString::fromStdString(ttf_glyph_out(&g,verbose)));
@@ -68,7 +68,7 @@ QList<ImageDecoder::SvgInfo> ImageDecoder::ttf_decode(QString ttffilename,int W,
         }
         tfile.free();
     } else {
-        font2svg::glyph g(ttffilename.toStdString(), codepoint );
+        font2svg::glyph g(ttffilename.toStdString(), codepoint, true );
         SvgInfo info;
         info.src = new QString(QString::fromStdString(ttf_glyph_out(&g,verbose)));
         info.H = H;
