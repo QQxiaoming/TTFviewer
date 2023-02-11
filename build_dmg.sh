@@ -22,7 +22,7 @@ TTFVIEWER_VERSION="V"$TTFVIEWER_MAJARVERSION$TTFVIEWER_SUBVERSION$TTFVIEWER_REVI
 rm -rf .qmake.stash Makefile
 $QT_DIR/bin/qmake -makefile
 make
-cp -R ./test ./build_release/out/TTFviewer.app/contents/resources/test
+cp -R ./test ./build_release/out/TTFviewer.app/Contents/Resources/test
 cp ./tools/create-dmg/build-dmg.sh ./build_release/out/build-dmg.sh
 cp ./tools/create-dmg/installer_background.png ./build_release/out/installer_background.png
 cd ./build_release/out
