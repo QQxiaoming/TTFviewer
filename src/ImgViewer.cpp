@@ -54,7 +54,7 @@ ImgViewer::ImgViewer(QWidget *parent,QWidget *parentWindow) :
     QWidget(parent),
     ui(new Ui::ImgViewerWindow) {
     ui->setupUi(this);
-    qRegisterMetaType<QList<ImageDecoder::SvgInfo>>("QList<SvgInfo>");
+    qRegisterMetaType<QList<ImageDecoder::SvgInfo>>("QList<ImageDecoder::SvgInfo>");
     this->parentWindow = parentWindow;
     setWindowTitle("loading file, please wait ....");
     ui->left_PushButton->setFlat(true);
@@ -142,7 +142,7 @@ bool ImgViewer::setFileList_multithreading(QStringList filenamelist,QString TTFF
     // 遍历文件列表
     foreach( QString filename, filenamelist) {
         TTFDecodeThread *decodeThread = new TTFDecodeThread(this, filename, TTFFormat, W, H, codepoint);
-        QObject::connect(decodeThread, SIGNAL(finsh_signal(QList<SvgInfo>, QString)), this, SLOT(reciveimgdata(QList<SvgInfo>, QString)));
+        QObject::connect(decodeThread, SIGNAL(finsh_signal(QList<ImageDecoder::SvgInfo>, QString)), this, SLOT(reciveimgdata(QList<ImageDecoder::SvgInfo>, QString)));
         this->decode_thread.insert(this->decode_thread.end(),decodeThread);
     }
     this->decode_thread[0]->start();
