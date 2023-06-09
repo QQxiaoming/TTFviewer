@@ -255,6 +255,13 @@ void ImgViewer::mouseDoubleClickEvent(QMouseEvent *event) {
 }
 
 void ImgViewer::wheelEvent(QWheelEvent *event) {
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    double event_x=event->position().x();
+    double event_y=event->position().y();
+    #else
+    double event_x=event->x();
+    double event_y=event->y();
+    #endif
     if (!this->img_list.empty()) {
         if( event->angleDelta().y() > 0) {
             // 放大图片
@@ -265,10 +272,10 @@ void ImgViewer::wheelEvent(QWheelEvent *event) {
                 currentImg2scaledImg(this->currentImg,this->scaled_img,
                     QSize(this->scaled_img.width() + setpsize_x,this->scaled_img.height() + setpsize_y));
 
-                float new_w = event->position().x() -
-                    (this->scaled_img.width() * (event->position().x() - this->point.x())) / (this->scaled_img.width() - setpsize_x);
-                float new_h = event->position().y() -
-                    (this->scaled_img.height() * (event->position().y() - this->point.y())) / (this->scaled_img.height() - setpsize_y);
+                float new_w = event_x -
+                    (this->scaled_img.width() * (event_x - this->point.x())) / (this->scaled_img.width() - setpsize_x);
+                float new_h = event_y -
+                    (this->scaled_img.height() * (event_y - this->point.y())) / (this->scaled_img.height() - setpsize_y);
                 this->point = QPoint(new_w, new_h);
                 this->repaint();
             }
@@ -281,10 +288,10 @@ void ImgViewer::wheelEvent(QWheelEvent *event) {
                 currentImg2scaledImg(this->currentImg,this->scaled_img,
                     QSize(this->scaled_img.width() - setpsize_x,this->scaled_img.height() - setpsize_y));
 
-                float new_w = event->position().x() -
-                    (this->scaled_img.width() * (event->position().x() - this->point.x())) / (this->scaled_img.width() + setpsize_x);
-                float new_h = event->position().y() -
-                    (this->scaled_img.height() * (event->position().y() - this->point.y())) / (this->scaled_img.height() + setpsize_y);
+                float new_w = event_x -
+                    (this->scaled_img.width() * (event_x - this->point.x())) / (this->scaled_img.width() + setpsize_x);
+                float new_h = event_y -
+                    (this->scaled_img.height() * (event_y - this->point.y())) / (this->scaled_img.height() + setpsize_y);
                 this->point = QPoint(new_w, new_h);
                 this->repaint();
             }
