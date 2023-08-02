@@ -30,7 +30,7 @@ set "INNO_SETUP_DIR=C:/Program Files (x86)/Inno Setup 6"
 
 ## linux
 
-- 安装Qt、patchelf工具，编译zlib以及linuxdeploy工具(tools中已编译好适用于ubuntu20.04的linuxdeploy工具)
+- 安装Qt、patchelf工具，编译freetype2 lib以及linuxdeploy工具(tools中已编译好适用于ubuntu20.04的linuxdeploy工具)
 
 - 修改partform_unix.pri文件以下内容
 
