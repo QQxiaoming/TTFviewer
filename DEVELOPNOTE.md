@@ -23,8 +23,6 @@ set "QT_DIR=C:/Qt/Qt6.2.0/6.2.0/mingw81_32/bin"
 set "QT_TOOLS_DIR=C:/Qt/Qt6.2.0/Tools/mingw810_32/bin"
 :: 定义Inno Setup目录
 set "INNO_SETUP_DIR=C:/Program Files (x86)/Inno Setup 6"
-:: 定义版本号
-set "TTFVIEWER_VERSION=0.1.0"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ```
 
@@ -32,7 +30,7 @@ set "TTFVIEWER_VERSION=0.1.0"
 
 ## linux
 
-- 安装Qt、patchelf工具，编译freetype lib以及linuxdeployqt工具(tools中已编译好适用于ubuntu20.04的linuxdeployqt工具)
+- 安装Qt、patchelf工具，编译zlib以及linuxdeploy工具(tools中已编译好适用于ubuntu20.04的linuxdeploy工具)
 
 - 修改partform_unix.pri文件以下内容
 
@@ -72,12 +70,8 @@ FREETPE2_DIR=/home/qqm/Desktop/ttfviewer/depend/freetype
 ```sh
 ###############################################################################
 # 定义Qt目录
-QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
+QT_DIR=/opt/Qt6.2.0/6.2.0/macos
 ###############################################################################
 ```
 
 - 执行build_dmg.sh脚本等待编译打包完成。
-
-## python版本
-
-运行 python ./src/YUVviewer.py
