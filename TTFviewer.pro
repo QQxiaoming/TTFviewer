@@ -45,6 +45,11 @@ FORMS += \
 RESOURCES += \
         src/img.qrc
 
+TRANSLATIONS += \
+    lang/ttfviewer_zh_CN.ts \
+    lang/ttfviewer_ja_JP.ts \
+    lang/ttfviewer_en_US.ts
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

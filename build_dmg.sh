@@ -20,6 +20,7 @@ export QML2_IMPORT_PATH=$QT_DIR/qml
 TTFVIEWER_VERSION="V"$TTFVIEWER_MAJARVERSION$TTFVIEWER_SUBVERSION$TTFVIEWER_REVISION
 # 编译
 rm -rf .qmake.stash Makefile
+$QT_DIR/bin/lrelease ./TTFviewer.pro
 $QT_DIR/bin/qmake -makefile
 make
 cp -R ./test ./build_release/out/TTFviewer.app/Contents/Resources/test
