@@ -2,7 +2,7 @@
 #define MyAppName "TTFviewer"
 #define MyAppVersion "#VERSION#"
 #define MyAppVersionInfoVersion "#VERSIONINFOVERSION#"
-#define MyAppPublisher "QQxiaoming <2014500726@smail.xtu.edu.cn> zhiliao007 <wenqing.li@aliyun.com>"
+#define MyAppPublisher "QQxiaoming <2014500726@smail.xtu.edu.cn>"
 #define MyAppURL "https://github.com/QQxiaoming/TTFviewer"
 #define MyAppExeName "TTFviewer.exe"
 #define MyAppOutputName "TTFviewer_setup"
