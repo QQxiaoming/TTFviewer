@@ -7,7 +7,7 @@ QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
 # 定义版本号
 TTFVIEWER_MAJARVERSION="0"
 TTFVIEWER_SUBVERSION="2"
-TTFVIEWER_REVISION="4"
+TTFVIEWER_REVISION="5"
 ###############################################################################
 
 
@@ -45,7 +45,9 @@ mkdir -p ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer
 cp -r ./test ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/opt/TTFviewer/test
 # 配置打包信息
 sed -i "s/#VERSION#/$TTFVIEWER_MAJARVERSION.$TTFVIEWER_SUBVERSION$TTFVIEWER_REVISION/g" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/DEBIAN/control
-SIZE=$(du -sh -B 1024 ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64 | sed "s/.\///g")
+cd ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64
+SIZE=$(du -sh -B 1024 ./ | sed "s/.\///g")
+cd -
 InstalledSize=$SIZE
 sed -i "s/#SIZE#/$InstalledSize/g" ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/DEBIAN/control
 chmod 755 ./dpkg/TTFviewer_Linux_"$TTFVIEWER_VERSION"_x86_64/* -R

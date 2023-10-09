@@ -7,7 +7,7 @@ QT_DIR=/opt/Qt6.2.0/6.2.0/gcc_64
 # 定义版本号
 TTFVIEWER_MAJARVERSION="0"
 TTFVIEWER_SUBVERSION="2"
-TTFVIEWER_REVISION="4"
+TTFVIEWER_REVISION="5"
 ###############################################################################
 
 
