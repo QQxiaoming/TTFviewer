@@ -82,12 +82,12 @@
         <widget class="QComboBox" name="TTFFormat_ComboBox">
          <item>
           <property name="text">
-           <string>ttf</string>
+           <string notr="true">ttf</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>ttf_verbose</string>
+           <string notr="true">ttf_verbose</string>
           </property>
          </item>
         </widget>

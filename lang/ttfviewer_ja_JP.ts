@@ -27,14 +27,8 @@
         <translation>TTF形式</translation>
     </message>
     <message>
-        <location filename="../src/UI_TTFviewer.ui" line="85"/>
-        <source>ttf</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/UI_TTFviewer.ui" line="90"/>
         <source>ttf_verbose</source>
-        <translation>ttf アノテーション情報を含む</translation>
+        <translation type="vanished">ttf アノテーション情報を含む</translation>
     </message>
     <message>
         <location filename="../src/UI_TTFviewer.ui" line="106"/>
@@ -73,7 +67,7 @@
     </message>
     <message>
         <location filename="../src/UI_TTFviewer.ui" line="282"/>
-        <location filename="../src/TTFviewer.cpp" line="426"/>
+        <location filename="../src/TTFviewer.cpp" line="439"/>
         <source>About</source>
         <translation>について</translation>
     </message>
@@ -83,7 +77,7 @@
         <translation>Qtについて</translation>
     </message>
     <message>
-        <location filename="../src/TTFviewer.cpp" line="412"/>
+        <location filename="../src/TTFviewer.cpp" line="425"/>
         <source>1.Select parameters on the main interface.
 2.Click Open File or Folder to parse the image data and display the image.
 3.Used in the image display interface
@@ -102,7 +96,7 @@
   - 中クリックすると、画像の元のサイズが表示されます。</translation>
     </message>
     <message>
-        <location filename="../src/TTFviewer.cpp" line="427"/>
+        <location filename="../src/TTFviewer.cpp" line="440"/>
         <source>&lt;p&gt;Version&lt;/p&gt;&lt;p&gt;&amp;nbsp;%1&lt;/p&gt;&lt;p&gt;Commit&lt;/p&gt;&lt;p&gt;&amp;nbsp;%2&lt;/p&gt;&lt;p&gt;Author&lt;/p&gt;&lt;p&gt;&amp;nbsp;qiaoqm@aliyun.com&lt;/p&gt;&lt;p&gt;Website&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://github.com/QQxiaoming/TTFviewer&apos;&gt;https://github.com/QQxiaoming&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://gitee.com/QQxiaoming/TTFviewer&apos;&gt;https://gitee.com/QQxiaoming&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;バージョン&lt;/p&gt;&lt;p&gt;&amp;nbsp;%1&lt;/p&gt;&lt;p&gt;コミット&lt;/p&gt;&lt;p&gt;&amp;nbsp;%2&lt;/p&gt;&lt;p&gt;開発者&lt;/p&gt;&lt;p&gt;&amp;nbsp;qiaoqm@aliyun.com&lt;/p&gt;&lt;p&gt;ウェブサイト&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://github.com/QQxiaoming/TTFviewer&apos;&gt;https://github.com/QQxiaoming&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://gitee.com/QQxiaoming/TTFviewer&apos;&gt;https://gitee.com/QQxiaoming&lt;/a&gt;&lt;/p&gt;</translation>
     </message>

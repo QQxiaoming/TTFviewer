@@ -27,16 +27,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/UI_TTFviewer.ui" line="85"/>
-        <source>ttf</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/UI_TTFviewer.ui" line="90"/>
-        <source>ttf_verbose</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../src/UI_TTFviewer.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Width&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
@@ -73,7 +63,7 @@
     </message>
     <message>
         <location filename="../src/UI_TTFviewer.ui" line="282"/>
-        <location filename="../src/TTFviewer.cpp" line="426"/>
+        <location filename="../src/TTFviewer.cpp" line="439"/>
         <source>About</source>
         <translation></translation>
     </message>
@@ -83,7 +73,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/TTFviewer.cpp" line="412"/>
+        <location filename="../src/TTFviewer.cpp" line="425"/>
         <source>1.Select parameters on the main interface.
 2.Click Open File or Folder to parse the image data and display the image.
 3.Used in the image display interface
@@ -95,7 +85,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/TTFviewer.cpp" line="427"/>
+        <location filename="../src/TTFviewer.cpp" line="440"/>
         <source>&lt;p&gt;Version&lt;/p&gt;&lt;p&gt;&amp;nbsp;%1&lt;/p&gt;&lt;p&gt;Commit&lt;/p&gt;&lt;p&gt;&amp;nbsp;%2&lt;/p&gt;&lt;p&gt;Author&lt;/p&gt;&lt;p&gt;&amp;nbsp;qiaoqm@aliyun.com&lt;/p&gt;&lt;p&gt;Website&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://github.com/QQxiaoming/TTFviewer&apos;&gt;https://github.com/QQxiaoming&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;a href=&apos;https://gitee.com/QQxiaoming/TTFviewer&apos;&gt;https://gitee.com/QQxiaoming&lt;/a&gt;&lt;/p&gt;</source>
         <translation></translation>
     </message>
