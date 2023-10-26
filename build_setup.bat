@@ -39,8 +39,6 @@ xcopy /y .\build_release\out\TTFviewer.exe .\InnoSetup\build\
 xcopy /y .\test\* .\InnoSetup\build\test\
 :: 使用windeployqt拷贝依赖dll库到打包目录
 windeployqt --dir .\InnoSetup\build .\InnoSetup\build\TTFviewer.exe
-xcopy /y "%QT_TOOLS_DIR%\..\bin\lib*.dll" ".\InnoSetup\build\"
-xcopy /y "%QT_TOOLS_DIR%\..\lib\lib*.dll" ".\InnoSetup\build\"
 :: 打包
 echo "wait inno build setup..."
 iscc /q ".\InnoSetup\build_temp_setup.iss"
