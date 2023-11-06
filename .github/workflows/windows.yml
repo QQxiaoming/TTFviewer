@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3.3.0
+        uses: jurplel/install-qt-action@v4
         with:
           arch: win64_mingw81
           version: '6.2.0'
@@ -36,6 +36,7 @@ jobs:
         run: |
           Choco-Install -PackageName innosetup --force
           Choco-Install -PackageName cmake --force
+          Choco-Install -PackageName mingw --force
 
       - uses: msys2/setup-msys2@v2
 
@@ -44,7 +45,8 @@ jobs:
         run: |
           pacman --noconfirm -S make
           cd depend
-          export PATH=/c/ProgramData/Chocolatey/lib/mingw/tools/install/mingw64/bin:$PATH
+          export PATH=/c/ProgramData/mingw64/mingw64/bin:$PATH
+          ls /c/ProgramData/mingw64/mingw64/bin
           ./build_ms.sh
 
       - name: Build all
