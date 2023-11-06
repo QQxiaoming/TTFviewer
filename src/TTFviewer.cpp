@@ -387,7 +387,7 @@ void TTFviewer::openFile() {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
         QStringList openfile_list = FileDialog::getOpenFileNames(
-                            this, "选择文件", openDir, "TTF files(*.ttf *.data *.raw)");
+                            this, tr("Open File"), openDir, "TTF files(*.ttf *.data *.raw)");
         if(openfile_list.size() != 0) {
             QFileInfo file(openfile_list[0]);
             TTFviewerConfigFile->config_dict.lastPath = file.absolutePath();
@@ -403,7 +403,7 @@ void TTFviewer::openFolder() {
         if(lastPath.isDir()) {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
-        QString openfolder_name = FileDialog::getExistingDirectory(this, "选择文件夹", openDir);
+        QString openfolder_name = FileDialog::getExistingDirectory(this, tr("Open Folder"), openDir);
         if (!openfolder_name.isEmpty()) {
             TTFviewerConfigFile->config_dict.lastPath = openfolder_name;
             QDir dir(openfolder_name);

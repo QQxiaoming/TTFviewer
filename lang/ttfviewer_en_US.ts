@@ -73,6 +73,16 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../src/TTFviewer.cpp" line="390"/>
+        <source>Open File</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/TTFviewer.cpp" line="406"/>
+        <source>Open Folder</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../src/TTFviewer.cpp" line="425"/>
         <source>1.Select parameters on the main interface.
 2.Click Open File or Folder to parse the image data and display the image.
