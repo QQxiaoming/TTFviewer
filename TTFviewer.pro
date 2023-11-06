@@ -36,6 +36,7 @@ HEADERS += \
         src/ImgViewer.h \
         src/TTFdecoder.h \
         src/font_to_svg.hpp \
+        src/filedialog.h \
         src/configFile.h
 
 FORMS += \

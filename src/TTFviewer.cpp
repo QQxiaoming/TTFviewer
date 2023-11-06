@@ -19,7 +19,6 @@
  */
 #include <QApplication>
 #include <QMessageBox>
-#include <QFileDialog>
 #include <QToolTip>
 #include <QPoint>
 #include <QScreen>
@@ -30,6 +29,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <iostream>
+#include "filedialog.h"
 #include "TTFviewer.h"
 #include "ui_UI_TTFviewer.h"
 
@@ -386,7 +386,7 @@ void TTFviewer::openFile() {
         if(lastPath.isDir()) {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
-        QStringList openfile_list = QFileDialog::getOpenFileNames(
+        QStringList openfile_list = FileDialog::getOpenFileNames(
                             this, "选择文件", openDir, "TTF files(*.ttf *.data *.raw)");
         if(openfile_list.size() != 0) {
             QFileInfo file(openfile_list[0]);
@@ -403,7 +403,7 @@ void TTFviewer::openFolder() {
         if(lastPath.isDir()) {
             openDir = TTFviewerConfigFile->config_dict.lastPath;
         }
-        QString openfolder_name = QFileDialog::getExistingDirectory(this, "选择文件夹", openDir);
+        QString openfolder_name = FileDialog::getExistingDirectory(this, "选择文件夹", openDir);
         if (!openfolder_name.isEmpty()) {
             TTFviewerConfigFile->config_dict.lastPath = openfolder_name;
             QDir dir(openfolder_name);
