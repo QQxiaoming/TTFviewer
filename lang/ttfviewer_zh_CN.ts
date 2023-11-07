@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>ImgViewer</name>
+    <message>
+        <location filename="../src/ImgViewer.cpp" line="248"/>
+        <source>Save File</source>
+        <translation>保存文件</translation>
+    </message>
+</context>
+<context>
     <name>ImgViewerWindow</name>
     <message>
         <location filename="../src/UI_ImgViewer.ui" line="20"/>

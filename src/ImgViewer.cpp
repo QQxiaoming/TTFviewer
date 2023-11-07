@@ -245,7 +245,7 @@ void ImgViewer::mouseDoubleClickEvent(QMouseEvent *event) {
             int list_index = this->img_list.indexOf(this->currentImg_RGB_list);
             QList<ImageDecoder::SvgInfo> img_RGB_list = this->img_list[list_index];
             int img_index = img_RGB_list.indexOf(this->currentImg);
-            QString savefile_name = FileDialog::getSaveFileName( this, "保存文件", 
+            QString savefile_name = FileDialog::getSaveFileName( this, tr("Save File"),
                 this->filelist[list_index].replace(".ttf","-") + 
                 "0x" + QString::number(this->currentImg.codepoint, 16) + 
                 "-" + QString::number(img_index) + ".svg", 
