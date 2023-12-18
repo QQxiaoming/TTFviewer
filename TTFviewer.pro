@@ -78,7 +78,7 @@ win32:{
     INCLUDEPATH += $${FREETPE2_DIR}\include\freetype2 \
                     $${FREETPE2_DIR}\include
 
-    LIBS += $${FREETPE2_DIR}\lib\libfreetype.a
+    LIBS += $${FREETPE2_DIR}\lib\libfreetype-6.dll
 
     VERSION = $${TTFVIEWER_VERSION}.000
     RC_ICONS = "img\ico.ico"
