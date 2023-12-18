@@ -6,7 +6,8 @@ tar -xzvf freetype-2.13.2.tar.gz
 cd $SHELL_FOLDER/freetype-2.13.2
 ./configure \
     --prefix=/d/freetype \
-    --disable-shared \
+    --enable-shared \
+    --disable-static \
     --without-zlib \
     --without-png \
     --without-bzip2 \
