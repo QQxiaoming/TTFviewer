@@ -32,21 +32,22 @@ jobs:
           arch: win64_mingw81
           version: '6.2.0'
 
-      - name: Install prerequisites
-        run: |
-          Choco-Install -PackageName innosetup --force
-          Choco-Install -PackageName cmake --force
-          Choco-Install -PackageName mingw --force
+      - name: Install cmake
+        uses: crazy-max/ghaction-chocolatey@v3
+        with:
+          args: install cmake --no-progress
 
-      - uses: msys2/setup-msys2@v2
-
+      - name: Install innosetup
+        uses: crazy-max/ghaction-chocolatey@v3
+        with:
+          args: install innosetup --no-progress
+  
       - name: Build depend
         shell: msys2 {0}
         run: |
-          pacman --noconfirm -S make
+          pacman --noconfirm -S make cmake autoconf automake bison diffutils libtool texinfo xmlto
+          pacman --noconfirm -S base-devel msys2-devel mingw-w64-{x86_64,i686}-toolchain 
           cd depend
-          export PATH=/c/ProgramData/mingw64/mingw64/bin:$PATH
-          ls /c/ProgramData/mingw64/mingw64/bin
           ./build_ms.sh
 
       - name: Build all
