@@ -39,6 +39,7 @@ xcopy /y .\build_release\out\TTFviewer.exe .\InnoSetup\build\
 xcopy /y .\test\* .\InnoSetup\build\test\
 :: 使用windeployqt拷贝依赖dll库到打包目录
 windeployqt --dir .\InnoSetup\build .\InnoSetup\build\TTFviewer.exe
+xcopy /y "D:\freetype\bin\libfreetype-6.dll" ".\InnoSetup\build\"
 :: 打包
 echo "wait inno build setup..."
 iscc /q ".\InnoSetup\build_temp_setup.iss"
