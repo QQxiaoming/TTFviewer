@@ -42,6 +42,10 @@ jobs:
         with:
           args: install innosetup --no-progress
   
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+
       - name: Build depend
         shell: msys2 {0}
         run: |
