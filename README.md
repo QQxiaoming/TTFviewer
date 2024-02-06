@@ -12,7 +12,7 @@
 
 # TTFviewer
 
-English | [简体中文](./README_zh_CN.md)
+🇺🇸 English | [🇨🇳 简体中文](./README_zh_CN.md)
 
 TTFviewer is a small tool for developers to view and preview various ttf font/icon image formats. It is based on Qt, and some of the code comes from the project: https://github.com/donbright/font_to_svg and https://github.com/QQxiaoming/YUVviewer , supports windows/linux/macos, the interface is simple and clear, and the operation is portable. The main interface is as follows:
 
@@ -74,4 +74,4 @@ ttf\ttf_verbose
 
 If you have suggestions or ideas for this project, please submit issues and pull requests on GitHub or Gitee.
 
-At present, the project has been completely migrated to Qt6 development, it is recommended to use version Qt6.2.0 or higher.
+At present, the project has been completely migrated to Qt6 development, it is recommended to use version Qt6.5.0 or higher.

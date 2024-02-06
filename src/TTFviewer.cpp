@@ -33,10 +33,13 @@
 #include "TTFviewer.h"
 #include "ui_UI_TTFviewer.h"
 
-const QString TTFviewer::VERSION = APP_VERSION;
-const QString TTFviewer::GIT_TAG =
-#include <git_tag.inc>
-;
+#include "build_info.inc"
+
+const QString VERSION = APP_VERSION;
+const QString GIT_TAG = BUILD_INFO;
+const QString DATE_TAG = BUILD_DATE;
+const QString HASH_TAG = BUILD_HASH;
+const QString SHORT_HASH_TAG = BUILD_SHORT_HASH;
 
 const QList<QPair<QString, QStringList>> TTFviewer::frameSizeTypeDict = {
     {"QQCIF",   {"88","72"}},
@@ -472,7 +475,7 @@ static QTranslator appTranslator;
 int main(int argc, char *argv[]) {
     if(argc == 2) {
         if((!strncmp(argv[1],"--version",9)) | (!strncmp(argv[1],"-v",2)) ) {
-            std::cout << "TTFviewer " << TTFviewer::VERSION.toStdString() << "\n" << TTFviewer::GIT_TAG.toStdString() << "\n";
+            std::cout << "TTFviewer " << VERSION.toStdString() << "\n" << GIT_TAG.toStdString() << "\n";
             return 0;
         }
     }

@@ -12,7 +12,7 @@
 
 # TTFviewer
 
-[English](./README.md) | 简体中文
+[🇺🇸 English](./README.md) | 🇨🇳 简体中文
 
 TTFviewer一款用于开发人员查看预览各种ttf字体/图标图像格式的小工具，其基于Qt，部分代码来源自项目: https://github.com/donbright/font_to_svg 和 https://github.com/QQxiaoming/YUVviewer ，支持windows/linux/macos，界面简单清晰，操作便携，主界面如下：
 
@@ -74,4 +74,4 @@ ttf\ttf_verbose
 
 如果您对本项目有建议或想法，欢迎在GitHub或Gitee上提交issue和pull requests。
 
-目前项目已完全迁移至Qt6开发，建议使用版本Qt6.2.0或更高版本。
+目前项目已完全迁移至Qt6开发，建议使用版本Qt6.5.0或更高版本。

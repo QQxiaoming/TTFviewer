@@ -15,6 +15,12 @@ unix:{
 TTFVIEWER_VERSION="$$cat(./version.txt)"
 
 ###############################################################################
+
+!versionAtLeast(QT_VERSION, 6.5.0) {
+    message("Cannot use Qt $$QT_VERSION")
+    error("Use Qt 6.5.0 or newer")
+}
+
 # 定义需要的Qt组件
 QT       += core gui
 QT       += xml svg
@@ -28,6 +34,10 @@ DEFINES += APP_VERSION="\\\"V$${TTFVIEWER_VERSION}\\\""
 CONFIG += c++11
 
 # 源文件配置
+INCLUDEPATH += \
+        $$PWD \
+        $$PWD/src 
+
 SOURCES += \
         src/TTFviewer.cpp \
         src/ImgViewer.cpp \
@@ -86,7 +96,7 @@ win32:{
     QMAKE_TARGET_DESCRIPTION = "TTFviewer based on Qt $$[QT_VERSION]"
     QMAKE_TARGET_COPYRIGHT = "GNU General Public License v3.0"
 
-    git_tag.commands = $$quote("cd $$PWD && git describe --always --long --dirty --abbrev=10 --tags | $$PWD/tools/awk/awk.exe \'{print \"\\\"\"\$$0\"\\\"\"}\' > git_tag.inc")
+    build_info.commands = $$quote("c:/Windows/system32/WindowsPowerShell/v1.0/powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File \"$$PWD/tools/generate_info.ps1\" > $$PWD/build_info.inc")
 }
 
 unix:!macx:{
@@ -99,7 +109,7 @@ unix:!macx:{
     DEPENDPATH +=$${FREETPE2_DIR}/include/freetype2
     LIBS += -L $${FREETPE2_DIR}/lib/ -lfreetype
     
-    git_tag.commands = $$quote("cd $$PWD && git describe --always --long --dirty --abbrev=10 --tags | awk \'{print \"\\\"\"\$$0\"\\\"\"}\' > git_tag.inc")
+    build_info.commands = $$quote("cd $$PWD && ./tools/generate_info.sh > build_info.inc")
 }
 
 macx:{
@@ -112,12 +122,12 @@ macx:{
     DEPENDPATH +=$${FREETPE2_DIR}/include/freetype2
     LIBS += -L $${FREETPE2_DIR}/lib/ -lfreetype
 
-    git_tag.commands = $$quote("cd $$PWD && git describe --always --long --dirty --abbrev=10 --tags | awk \'{print \"\\\"\"\$$0\"\\\"\"}\' > git_tag.inc")
+    build_info.commands = $$quote("cd $$PWD && ./tools/generate_info.sh > build_info.inc")
 }
 
-git_tag.target = $$PWD/git_tag.inc
-git_tag.depends = FORCE
-PRE_TARGETDEPS += $$PWD/git_tag.inc
-QMAKE_EXTRA_TARGETS += git_tag
+build_info.target = $$PWD/build_info.inc
+build_info.depends = FORCE
+PRE_TARGETDEPS += $$PWD/build_info.inc
+QMAKE_EXTRA_TARGETS += build_info
 
 ###############################################################################

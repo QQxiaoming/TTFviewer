@@ -35,8 +35,6 @@ class TTFviewer : public QMainWindow {
 public:
     explicit TTFviewer(QWidget *parent = nullptr);
     ~TTFviewer();
-    static const QString VERSION;
-    static const QString GIT_TAG;
 
 protected:
     void closeEvent(QCloseEvent *event);
