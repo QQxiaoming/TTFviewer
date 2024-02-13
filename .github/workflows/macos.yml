@@ -56,7 +56,7 @@ jobs:
         with:
           name: TTFviewer_macos
           path: |
-            ./build_release/out/TTFviewer.dmg
+            ./dmgOut/*.dmg
 
       - name: Run tests
         run: |
@@ -97,7 +97,7 @@ jobs:
         with:
           name: TTFviewer_macos_arm64
           path: |
-            ./build_release/out/TTFviewer.dmg
+            ./dmgOut/*.dmg
 
       - name: Run tests
         run: |

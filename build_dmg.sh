@@ -30,5 +30,14 @@ cd ./build_release/out
 $QT_DIR/bin/macdeployqt TTFviewer.app
 otool -L ./TTFviewer.app/Contents/MacOS/TTFviewer
 ./build-dmg.sh TTFviewer
+cd ../../
+mkdir dmgOut
+cpu=$(sysctl -n machdep.cpu.brand_string)
+ARCH="x86_64"
+case $cpu in
+  *Intel*) ARCH="x86_64" ;;
+  *Apple*) ARCH="arm64" ;;
+esac
+cp ./build_release/out/TTFviewer.dmg ./dmgOut/TTFviewer_macos_"$TTFVIEWER_VERSION"_"$ARCH".dmg
 echo build success!
 ###############################################################################

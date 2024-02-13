@@ -44,5 +44,12 @@ xcopy /y "D:\freetype\bin\libfreetype-6.dll" ".\InnoSetup\build\"
 echo "wait inno build setup..."
 iscc /q ".\InnoSetup\build_temp_setup.iss"
 del .\InnoSetup\build_temp_setup.iss
+FOR /F "delims=. tokens=1-3" %%x IN ("%TTFVIEWER_VERSION%") DO (
+    set "TTFVIEWER_MAJARVERSION=%%x"
+    set "TTFVIEWER_SUBVERSION=%%y"
+    set "TTFVIEWER_REVISION=%%z"
+)
+mkdir ".\output"
+echo F|xcopy /S /Q /Y /F ".\InnoSetup\TTFviewer_setup.exe" ".\output\TTFviewer_windows_V%TTFVIEWER_MAJARVERSION%%TTFVIEWER_SUBVERSION%%TTFVIEWER_REVISION%_x86_64_setup.exe"
 echo "build success!"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
