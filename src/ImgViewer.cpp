@@ -196,6 +196,7 @@ void ImgViewer::paintEvent(QPaintEvent *event) {
     if (!this->img_list.empty()) {
         QPainter painter;
         painter.begin(this);
+        painter.fillRect(event->rect(), Qt::white);
         draw_img(&painter);
         painter.end();
     }
