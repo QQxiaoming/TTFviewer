@@ -64,7 +64,7 @@ jobs:
           /Volumes/TTFviewer/TTFviewer.app/Contents/MacOS/TTFviewer --version
 
   macos_arm64:
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v4
