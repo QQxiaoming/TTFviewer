@@ -51,7 +51,7 @@ jobs:
           ./build_deb.sh
 
       - name: Upload build asserts
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: TTFviewer_Ubuntu2004
           path: |
