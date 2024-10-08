@@ -52,7 +52,7 @@ jobs:
           ./build_dmg.sh
 
       - name: Upload build asserts
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.4.1
         with:
           name: TTFviewer_macos
           path: |
@@ -93,7 +93,7 @@ jobs:
           ./build_dmg.sh
 
       - name: Upload build asserts
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.4.1
         with:
           name: TTFviewer_macos_arm64
           path: |
