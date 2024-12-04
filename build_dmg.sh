@@ -29,7 +29,7 @@ cd ./build_release/out
 # 打包
 $QT_DIR/bin/macdeployqt TTFviewer.app
 otool -L ./TTFviewer.app/Contents/MacOS/TTFviewer
-./build-dmg.sh TTFviewer
+sudo ./build-dmg.sh TTFviewer
 cd ../../
 mkdir dmgOut
 cpu=$(sysctl -n machdep.cpu.brand_string)
