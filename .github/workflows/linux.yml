@@ -22,8 +22,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  ubuntu-2004:
-    runs-on: ubuntu-20.04
+  ubuntu-2204:
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
       - name: Install prerequisites
         run: |
           sudo apt update
-          sudo apt install -y make gcc patchelf chrpath qt5-default libxcb-cursor0 build-essential libgtk-3-dev
+          sudo apt install -y make gcc patchelf chrpath libfuse2 libxcb-cursor0 build-essential libgtk-3-dev
 
       - name: Build all
         run: |
@@ -53,7 +53,7 @@ jobs:
       - name: Upload build asserts
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: TTFviewer_Ubuntu2004
+          name: TTFviewer_Ubuntu2204
           path: |
             ./dpkg/*.deb
 
