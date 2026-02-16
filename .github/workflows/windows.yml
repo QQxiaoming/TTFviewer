@@ -36,12 +36,12 @@ jobs:
           aqtversion: ==3.1.7
 
       - name: Install cmake
-        uses: crazy-max/ghaction-chocolatey@v3
+        uses: crazy-max/ghaction-chocolatey@v4
         with:
           args: install cmake --no-progress
 
       - name: Install innosetup
-        uses: crazy-max/ghaction-chocolatey@v3
+        uses: crazy-max/ghaction-chocolatey@v4
         with:
           args: install innosetup --no-progress
   
